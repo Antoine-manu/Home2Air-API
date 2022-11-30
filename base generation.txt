@@ -1,0 +1,20 @@
+npx sequelize model:generate --name Roles --attributes name:string 
+npx sequelize model:generate --name Company --attributes user_id:integer,name:string,first_name:string,last_name:string,address:string,city:string,zipcode:integer,phone:integer 
+npx sequelize model:generate --name Tickets --attributes user_id:integer,created_at:date,created_by:integer,updated_at:date,updated_by:integer,status:integer,title:string 
+npx sequelize model:generate --name Tickets_commentaire --attributes ticket_id:integer,content:text 
+npx sequelize model:generate --name Sensor --attributes name:string,created_at:date,deleted_at:date,active:boolean,room_id:integer,user_id:integer,parameters:text
+npx sequelize model:generate --name Notifications --attributes user_id:integer,custom:boolean,read:boolean,type:integer,date:date,title:string,sound_id:integer,icon_id:integer,message:text
+npx sequelize model:generate --name Notifications_types --attributes name:string 
+npx sequelize model:generate --name Notifications_messages --attributes message:string 
+npx sequelize model:generate --name User_place_list --attributes user_id:integer,place_id:integer
+npx sequelize model:generate --name Place --attributes name:string
+npx sequelize model:generate --name Room --attributes name:string,room_list_id:integer,place_id:integer
+
+npx sequelize model:generate --name Notifications_sound --attributes name:string
+npx sequelize model:generate --name Notifications_icon --attributes name:string
+npx sequelize model:generate --name User --attributes username:string,first_name:string,last_name:string,email:string,role_id:integer,token:string,created_at:date,deleted_at:date,active:boolean,user_place_list_id:integer
+
+
+
+
+
