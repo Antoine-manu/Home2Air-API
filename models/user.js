@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const roles = require('./roles');
 const User_place_list = require('./user_place_list');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -14,9 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       models.belongsToMany(User_place_list, {
         through: "user_place_liste_id",
         as: "user_place",
-        foreignKey: "user_place_liste_id",
+        foreignKey: "id",
       });
-      
+      models.belongsToMany(roles, {
+        through: "role_id",
+        as: "role",
+        foreignKey: "id",
+      });
     }
   }
   User.init({

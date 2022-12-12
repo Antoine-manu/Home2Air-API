@@ -1,5 +1,6 @@
 'use strict';
 
+const roles = require('../models/roles');
 const user_place_list = require('../models/user_place_list');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -25,7 +26,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       role_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: roles,
+          key: 'id'
+        }
       },
       token: {
         type: Sequelize.STRING
