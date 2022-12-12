@@ -1,5 +1,4 @@
-exports.getHome = async (req, res, next) => {
-    console.log('controller ok')
+exports.getAllPlaces = async (req, res, next) => {
     try{
         return res.status(200).json({message : 'Tout est ok'});
     }
