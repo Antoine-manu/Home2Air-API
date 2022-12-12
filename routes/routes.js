@@ -4,6 +4,6 @@ const mainController = require("../controllers/mainController")
 
 /* GET home page. */
 // console.log('router ok')
-router.get('/api/v1/', mainController.getHome);
+router.get('/', mainController.getHome);
 
 module.exports = router;
