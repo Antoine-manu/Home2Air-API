@@ -1,4 +1,9 @@
 'use strict';
+
+const notifications_icon = require('../models/notifications_icon');
+const notifications_sound = require('../models/notifications_sound');
+const user = require('../models/user');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +15,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: user,
+          key: 'id'
+        }
       },
       custom: {
         type: Sequelize.BOOLEAN
@@ -28,10 +37,18 @@ module.exports = {
         type: Sequelize.STRING
       },
       sound_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: notifications_sound,
+          key: 'id'
+        }
       },
       icon_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: notifications_icon,
+          key: 'id'
+        }
       },
       message: {
         type: Sequelize.TEXT
