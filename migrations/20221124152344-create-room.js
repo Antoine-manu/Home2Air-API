@@ -1,4 +1,7 @@
 'use strict';
+
+const place = require('../models/place');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,11 +15,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      room_list_id: {
-        type: Sequelize.INTEGER
-      },
       place_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: place,
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
