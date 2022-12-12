@@ -1,8 +1,5 @@
 'use strict';
 
-const roles = require('../models/roles');
-const user_place_list = require('../models/user_place_list');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -28,7 +25,7 @@ module.exports = {
       role_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: roles,
+          model: "Roles",
           key: 'id'
         }
       },
@@ -43,13 +40,6 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN
-      },
-      user_place_list_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: user_place_list,
-          key: 'id'
-        }
       },
       createdAt: {
         allowNull: false,

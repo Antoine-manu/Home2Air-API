@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const user_place_list = require('./user_place_list');
 module.exports = (sequelize, DataTypes) => {
   class Place extends Model {
     /**
@@ -10,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      models.belongsToMany(user_place_list, {
-        through: "place_list_id",
-        as: "place_list",
-        foreignKey: "id",
+    static associate({User, Room}) {
+      this.belongsToMany(User, {
+        through: "User_place_list"
       });
-
+      this.belongsTo(Room, {
+        foreignKey: "room_id",
+      });
     }
   }
   Place.init({
@@ -24,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Place',
+    tableName: 'Places',
   });
   return Place;
 };

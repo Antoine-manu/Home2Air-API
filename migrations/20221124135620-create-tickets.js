@@ -1,7 +1,5 @@
 'use strict';
 
-const user = require('../models/user');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -18,7 +16,7 @@ module.exports = {
       created_by: {
         type: Sequelize.INTEGER,
         references: {
-          model: user,
+          model: "Users",
           key: 'id'
         }
       },
@@ -28,7 +26,7 @@ module.exports = {
       updated_by: {
         type: Sequelize.INTEGER,
         references: {
-          model: user,
+          model: "Users",
           key: 'id'
         }
       },

@@ -1,7 +1,5 @@
 'use strict';
 
-const room = require('../models/room');
-const user = require('../models/user');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -25,14 +23,14 @@ module.exports = {
       room_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: room,
+          model: "Rooms",
           key: 'id'
         }
       },
       createdBy: {
         type: Sequelize.INTEGER,
         references: {
-          model: user,
+          model: "Users",
           key: 'id'
         }
       },

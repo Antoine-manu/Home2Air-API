@@ -1,6 +1,5 @@
 'use strict';
 
-const user_place_list = require('../models/user_place_list');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -22,14 +21,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      place_list_id: {
-        type:Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: user_place_list,
-          key: 'id'
-        }
       }
     });
   },

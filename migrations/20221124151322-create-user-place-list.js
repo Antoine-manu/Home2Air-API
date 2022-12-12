@@ -1,7 +1,5 @@
 'use strict';
 
-const place = require('../models/place');
-const user = require('../models/user');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -16,14 +14,14 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: user,
+          model: "Users",
           key: 'id'
         }
       },
       place_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: place,
+          model: "Places",
           key: 'id'
         }
       },

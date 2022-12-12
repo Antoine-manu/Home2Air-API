@@ -1,8 +1,5 @@
 'use strict';
 
-const notifications_icon = require('../models/notifications_icon');
-const notifications_sound = require('../models/notifications_sound');
-const user = require('../models/user');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -17,7 +14,7 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: user,
+          model: "Users",
           key: 'id'
         }
       },
@@ -39,14 +36,14 @@ module.exports = {
       sound_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: notifications_sound,
+          model: "Notifications_sounds",
           key: 'id'
         }
       },
       icon_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: notifications_icon,
+          model: "Notifications_icons",
           key: 'id'
         }
       },

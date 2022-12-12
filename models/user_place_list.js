@@ -12,17 +12,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-        models.belongsToMany(user, {
-          through: "user_id",
-          as: "user",
-          foreignKey: "id",
-        });
-
-        models.belongsToMany(place, {
-          through: "place_id",
-          as: "place",
-          foreignKey: "id",
-        });
     }
   }
   User_place_list.init({

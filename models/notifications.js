@@ -2,9 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const notifications_icon = require('./notifications_icon');
-const notifications_sound = require('./notifications_sound');
-const user = require('./user');
 module.exports = (sequelize, DataTypes) => {
   class Notifications extends Model {
     /**
@@ -12,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      models.belongsTo(user, {
-        through: "user_id",
-        foreignKey: "id",
+    static associate({User, Notifications_sound, Notifications_icon, Notifications_types}) {
+      this.hasOne(User, {
+        foreignKey: "user_id",
       });
-      models.belongsTo(notifications_sound, {
-        through: "sound_id",
-        foreignKey: "id",
+      this.hasOne(Notifications_sound, {
+        foreignKey: "notifcation_id",
       });
-      models.belongsTo(notifications_icon, {
-        through: "icon_id",
-        foreignKey: "id",
+      this.hasOne(Notifications_icon, {
+        foreignKey: "icon_id",
+      });
+      this.hasOne(Notifications_types, {
+        foreignKey: "types_id",
       });
     }
   }
