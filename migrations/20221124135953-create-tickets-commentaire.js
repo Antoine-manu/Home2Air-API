@@ -1,4 +1,7 @@
 'use strict';
+
+const tickets = require('../models/tickets');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       ticket_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: tickets,
+          key: 'id'
+        }
       },
       content: {
         type: Sequelize.TEXT
