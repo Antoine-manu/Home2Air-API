@@ -5,7 +5,7 @@ const app = express();
 
 try{
     app 
-        .use('api/v1/', require('./routes/routes'))
+        .use('/api/v1', require('./routes/routes'))
 
 
     app.listen(6500, () => console.log('Server started: 6500'));
