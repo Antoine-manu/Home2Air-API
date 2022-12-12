@@ -21,7 +21,7 @@ module.exports = {
       room_id: {
         type: Sequelize.INTEGER
       },
-      user_id: {
+      createdBy: {
         type: Sequelize.INTEGER
       },
       parameters: {
