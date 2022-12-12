@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       models.belongsToMany(user_place_list, {
         through: "place_list_id",
         as: "place_list",
-        foreignKey: "user_place_list_id",
+        foreignKey: "id",
       });
 
     }
