@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.belongsTo(place, {
         through: "place_id",
-        as: "place",
-        foreignKey: "place_id",
+        foreignKey: "id",
       });
     }
   }
