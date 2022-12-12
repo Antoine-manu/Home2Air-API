@@ -25,7 +25,11 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Notifications_types",
+          key: 'id'
+        }
       },
       date: {
         type: Sequelize.DATE
