@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "root",
+    "password": "",
     "database": "home2air",
     "host": "localhost",
     "dialect": "mysql"
