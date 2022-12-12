@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const room = require('./room');
 const user = require('./user');
 module.exports = (sequelize, DataTypes) => {
   class Sensor extends Model {
@@ -11,14 +12,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.belongsToMany(user, {
+      models.belongsTo(user, {
         through: "createdBy",
-        foreignKey: "user_id",
+        foreignKey: "id",
       });
-      models.belongsToMany(user, {
-        through: "user_id",
-        as: "user",
-        foreignKey: "user_id",
+      models.belongsTo(room, {
+        through: "room_id",
+        foreignKey: "id",
       });
     }
   }

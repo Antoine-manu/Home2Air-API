@@ -1,4 +1,8 @@
 'use strict';
+
+const room = require('../models/room');
+const user = require('../models/user');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -19,10 +23,18 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       room_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: room,
+          key: 'id'
+        }
       },
       createdBy: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: user,
+          key: 'id'
+        }
       },
       parameters: {
         type: Sequelize.TEXT
