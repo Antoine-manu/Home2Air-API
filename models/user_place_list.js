@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         models.belongsToMany(user, {
           through: "user_id",
           as: "user",
-          foreignKey: "user_id",
+          foreignKey: "id",
         });
 
         models.belongsToMany(place, {
           through: "place_id",
           as: "place",
-          foreignKey: "place_id",
+          foreignKey: "id",
         });
     }
   }
