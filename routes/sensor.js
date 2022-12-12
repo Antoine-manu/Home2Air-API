@@ -5,7 +5,7 @@ const sensorController = require("../controllers/sensorController")
 
 /* GET home page. */
 // console.log('router ok')
-router.get('/', sensorController.getAllSensors);
+router.get('/sensors', sensorController.getAllSensors);
 
 
 module.exports = router;

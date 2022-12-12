@@ -5,7 +5,7 @@ const rolesController = require("../controllers/rolesController")
 
 /* GET home page. */
 // console.log('router ok')
-router.get('/', rolesController.getAllRoles);
+router.get('/roles', rolesController.getAllRoles);
 
 
 module.exports = router;

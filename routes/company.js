@@ -5,7 +5,7 @@ const companyController = require("../controllers/companyController")
 
 /* GET home page. */
 // console.log('router ok')
-router.get('/', companyController.getAllCompanies);
+router.get('/company', companyController.getAllCompanies);
 
 
 module.exports = router;

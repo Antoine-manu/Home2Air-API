@@ -5,7 +5,7 @@ const placeController = require("../controllers/placeController")
 
 /* GET home page. */
 // console.log('router ok')
-router.get('/', placeController.getAllPlaces);
+router.get('/places', placeController.getAllPlaces);
 
 
 module.exports = router;
