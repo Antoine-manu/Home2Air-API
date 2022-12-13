@@ -81,20 +81,50 @@ exports.findOneById = (req, res) => {
 
 // Update a Company by the id in the request
 exports.update = (req, res) => {
-  
+	const id = req.params.id;
+
+	Company.update(req.body, {
+	  where: { id: id }
+	})
+	  .then(num => {
+		if (num == 1) {
+		  res.send({
+			message: "Company was updated successfully."
+		  });
+		} else {
+		  res.send({
+			message: `Cannot update Company with id=${id}. Maybe Company was not found or req.body is empty!`
+		  });
+		}
+	  })
+	  .catch(err => {
+		res.status(500).send({
+		  message: "Error updating Company with id=" + id
+		});
+	  });
 };
 
 // Delete a Company with the specified id in the request
 exports.delete = (req, res) => {
-  
-};
+	const id = req.body.id;
 
-// Delete all Companies from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Companies
-exports.findAllPublished = (req, res) => {
-  
+	Company.destroy({
+	  where: { id: id }
+	})
+	  .then(num => {
+		if (num == 1) {
+		  res.send({
+			message: "Company was deleted successfully!"
+		  });
+		} else {
+		  res.send({
+			message: `Cannot delete Company with id=${id}. Maybe Company was not found!`
+		  });
+		}
+	  })
+	  .catch(err => {
+		res.status(500).send({
+		  message: "Could not delete Tutorial with id=" + id
+		});
+	  });
 };

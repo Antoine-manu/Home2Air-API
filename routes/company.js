@@ -12,5 +12,11 @@ router.post('/company/find-all', companyController.findAll);
 /* POST findOneById company. */
 router.post('/company/find-one-by-id', companyController.findOneById);
 
+/* POST update company. */
+router.post('/company/update', companyController.update);
+
+/* POST delete company. */
+router.post('/company/delete', companyController.delete);
+
 
 module.exports = router;
