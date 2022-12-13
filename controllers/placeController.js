@@ -30,19 +30,111 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Companies from the database.
-exports.findAll = (req, res) => {};
+exports.findAll = (req, res) => {
+	Place.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Companiess.'
+			});
+		});
+};
 
-// Find a single Company with an id
-exports.findOne = (req, res) => {};
+// Find Companies with condition from database
+exports.findBy = (req, res) => {
+	const name = req.body.name;
 
-// Update a Company by the id in the request
-exports.update = (req, res) => {};
+	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+	console.log(condition);
+	if (condition) {
+		Place.findAll({ where: condition })
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.status(500).send({
+					message:
+						err.message || 'Some error occurred while retrieving tutorials.'
+				});
+			});
+	} else {
+		res.status(500).send({
+			message: 'No params found'
+		});
+	}
+};
 
-// Delete a Company with the specified id in the request
-exports.delete = (req, res) => {};
+// Find a single Place with an id
+exports.findOneById = (req, res) => {
+	const id = req.body.id;
 
-// Delete all Companies from the database.
-exports.deleteAll = (req, res) => {};
+	Place.findByPk(id)
+		.then(data => {
+			if (data) {
+				res.send(data);
+			} else {
+				res.status(404).send({
+					message: `Cannot find Place with id=${id}.`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Companiess.' + id
+			});
+		});
+};
 
-// Find all published Companies
-exports.findAllPublished = (req, res) => {};
+// Update a Place by the id in the request
+exports.update = (req, res) => {
+	const id = req.params.id;
+
+	Place.update(req.body, {
+		where: { id: id }
+	})
+		.then(num => {
+			if (num == 1) {
+				res.send({
+					message: 'Place was updated successfully.'
+				});
+			} else {
+				res.send({
+					message: `Cannot update Place with id=${id}. Maybe Place was not found or req.body is empty!`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: 'Error updating Place with id=' + id
+			});
+		});
+};
+
+// Delete a Place with the specified id in the request
+exports.delete = (req, res) => {
+	const id = req.body.id;
+
+	Place.destroy({
+		where: { id: id }
+	})
+		.then(num => {
+			if (num == 1) {
+				res.send({
+					message: 'Place was deleted successfully!'
+				});
+			} else {
+				res.send({
+					message: `Cannot delete Place with id=${id}. Maybe Place was not found!`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: 'Could not delete Tutorial with id=' + id
+			});
+		});
+};

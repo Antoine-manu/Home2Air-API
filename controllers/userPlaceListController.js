@@ -38,19 +38,111 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Companies from the database.
-exports.findAll = (req, res) => {};
+exports.findAll = (req, res) => {
+	User_place_list.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Companiess.'
+			});
+		});
+};
 
-// Find a single Company with an id
-exports.findOne = (req, res) => {};
+// Find Companies with condition from database
+exports.findBy = (req, res) => {
+	const name = req.body.name;
 
-// Update a Company by the id in the request
-exports.update = (req, res) => {};
+	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+	console.log(condition);
+	if (condition) {
+		User_place_list.findAll({ where: condition })
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.status(500).send({
+					message:
+						err.message || 'Some error occurred while retrieving tutorials.'
+				});
+			});
+	} else {
+		res.status(500).send({
+			message: 'No params found'
+		});
+	}
+};
 
-// Delete a Company with the specified id in the request
-exports.delete = (req, res) => {};
+// Find a single User_place_list with an id
+exports.findOneById = (req, res) => {
+	const id = req.body.id;
 
-// Delete all Companies from the database.
-exports.deleteAll = (req, res) => {};
+	User_place_list.findByPk(id)
+		.then(data => {
+			if (data) {
+				res.send(data);
+			} else {
+				res.status(404).send({
+					message: `Cannot find User_place_list with id=${id}.`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Companiess.' + id
+			});
+		});
+};
 
-// Find all published Companies
-exports.findAllPublished = (req, res) => {};
+// Update a User_place_list by the id in the request
+exports.update = (req, res) => {
+	const id = req.params.id;
+
+	User_place_list.update(req.body, {
+		where: { id: id }
+	})
+		.then(num => {
+			if (num == 1) {
+				res.send({
+					message: 'User_place_list was updated successfully.'
+				});
+			} else {
+				res.send({
+					message: `Cannot update User_place_list with id=${id}. Maybe User_place_list was not found or req.body is empty!`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: 'Error updating User_place_list with id=' + id
+			});
+		});
+};
+
+// Delete a User_place_list with the specified id in the request
+exports.delete = (req, res) => {
+	const id = req.body.id;
+
+	User_place_list.destroy({
+		where: { id: id }
+	})
+		.then(num => {
+			if (num == 1) {
+				res.send({
+					message: 'User_place_list was deleted successfully!'
+				});
+			} else {
+				res.send({
+					message: `Cannot delete User_place_list with id=${id}. Maybe User_place_list was not found!`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: 'Could not delete Tutorial with id=' + id
+			});
+		});
+};

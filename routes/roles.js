@@ -3,9 +3,25 @@ const router = express.Router();
 const rolesController = require("../controllers/rolesController")
 
 
-/* GET home page. */
-// console.log('router ok')
-router.get('/roles', rolesController.getAllRoles);
+
+/* POST create roles. */
+router.post('/roles/create', rolesController.create);
+
+/* POST findAll roles. */
+router.post('/roles/find-all', rolesController.findAll);
+
+/* POST findOne roles. */
+router.post('/roles/find-by', rolesController.findBy);
+
+/* POST findOneById roles. */
+router.post('/roles/find-one-by-id', rolesController.findOneById);
+
+/* POST update roles. */
+router.post('/roles/update', rolesController.update);
+
+/* POST delete roles. */
+router.post('/roles/delete', rolesController.delete);
+
 
 
 module.exports = router;
