@@ -45,12 +45,38 @@ exports.create = (req, res) => {
 
 // Retrieve all Companies from the database.
 exports.findAll = (req, res) => {
-  
+	Company.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+				err.message || "Some error occurred while retrieving Companiess."
+			});
+		});
 };
 
 // Find a single Company with an id
-exports.findOne = (req, res) => {
+exports.findOneById = (req, res) => {
+	const id = req.body.id;
   
+	Company.findByPk(id)
+	  .then(data => {
+		if (data) {
+			res.send(data);
+		  } else {
+			res.status(404).send({
+			  message: `Cannot find Company with id=${id}.`
+			});
+		  }
+	  })
+	  .catch(err => {
+		res.status(500).send({
+		  message:
+			err.message || "Some error occurred while retrieving Companiess." + id
+		});
+	  });
 };
 
 // Update a Company by the id in the request
