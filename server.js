@@ -18,7 +18,8 @@ try {
 		.use('/api/v1', require('./routes/routes'))
 		.use('/api/v1', require('./routes/sensor'))
 		.use('/api/v1', require('./routes/tickets'))
-		.use('/api/v1', require('./routes/user'));
+		.use('/api/v1', require('./routes/user'))
+		.use('/api/v1', require('./routes/auth'));
 
 	app.listen(6500, () => console.log('Server started: 6500'));
 } catch (error) {
