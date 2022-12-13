@@ -1,37 +1,30 @@
 const db = require('../models');
-const Room = db.Room;
+const NotificationMsg = db.Notifications_messages;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Room
+// Create and Save a new NotificationMsg
 exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.name) {
 		res.status(400).send({
-			message: 'La pièce doit avoir un nom'
-		});
-		return;
-	}
-	if (!req.body.place_id) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: 'Le rôle doit avoir un nom'
 		});
 		return;
 	}
 
-	// Create a Room
-	const room = {
-		name: req.body.name,
-		place_id: req.body.place_id
+	// Create a NotificationMsg
+	const notifMsg = {
+		name: req.body.name
 	};
-	console.log(Room);
-	// Save Room in the database
-	Room.create(room)
+	console.log(NotificationMsg);
+	// Save NotificationMsg in the database
+	NotificationMsg.create(notifMsg)
 		.then(data => {
 			res.send(data);
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: err.message || 'Some error occurred while creating the Room.'
+				message: err.message || 'Some error occurred while creating the NotificationMsg.'
 			});
 		});
 };

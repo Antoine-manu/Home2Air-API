@@ -9,5 +9,5 @@ var ticketsController = require("../controllers/ticketsController");
 // console.log('router ok')
 
 
-router.get('/', ticketsController.getAllTickets);
+router.get('/tickets', ticketsController.getAllTickets);
 module.exports = router;

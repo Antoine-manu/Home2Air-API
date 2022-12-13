@@ -9,5 +9,5 @@ var placeController = require("../controllers/placeController");
 // console.log('router ok')
 
 
-router.get('/', placeController.getAllPlaces);
+router.get('/places', placeController.getAllPlaces);
 module.exports = router;

@@ -1,72 +1,51 @@
 const db = require('../models');
-const Tickets = db.Tickets;
+const Tickets_commentaire = db.Tickets_commentaire;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tickets
+// Create and Save a new Tickets_commentaire
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.user_id) {
+	if (!req.body.name) {
 		res.status(400).send({
 			message: 'La pièce doit avoir un nom'
 		});
 		return;
 	}
-	if (!req.body.created_at) {
+	if (!req.body.room_id) {
 		res.status(400).send({
 			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
-	if (!req.body.created_by) {
+	if (!req.body.createdBy) {
 		res.status(400).send({
 			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
-	if (!req.body.updated_at) {
+	if (!req.body.parameters) {
 		res.status(400).send({
 			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
-	if (!req.body.updated_by) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.status) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.title) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	// Create a Tickets
-	const tickets = {
-		user_id: req.body.user_id,
-		created_at: req.body.created_at,
-		created_by: req.body.created_by,
-		updated_at: req.body.updated_at,
-		updated_by: req.body.updated_by,
-		status: req.body.status,
-		title: req.body.title
+
+	// Create a Tickets_commentaire
+	const tickets_comm = {
+		tickets_id: req.body.tickets_id,
+		content: req.body.content
 	};
-	console.log(Tickets);
-	// Save Tickets in the database
-	Tickets.create(tickets)
+	console.log(Tickets_commentaire);
+	// Save Tickets_commentaire in the database
+	Tickets_commentaire.create(tickets_comm)
 		.then(data => {
 			res.send(data);
 		})
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while creating the Tickets.'
+					err.message ||
+					'Some error occurred while creating the Tickets_commentaire.'
 			});
 		});
 };

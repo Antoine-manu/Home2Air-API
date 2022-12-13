@@ -9,5 +9,5 @@ var mainController = require("../controllers/mainController");
 // console.log('router ok')
 
 
-router.get('/', mainController.getHome);
+router.get('/sensor', mainController.getHome);
 module.exports = router;

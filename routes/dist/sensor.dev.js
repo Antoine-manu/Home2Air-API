@@ -9,5 +9,5 @@ var sensorController = require("../controllers/sensorController");
 // console.log('router ok')
 
 
-router.get('/', sensorController.getAllSensors);
+router.get('/sensors', sensorController.getAllSensors);
 module.exports = router;

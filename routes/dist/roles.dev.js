@@ -9,5 +9,5 @@ var rolesController = require("../controllers/rolesController");
 // console.log('router ok')
 
 
-router.get('/', rolesController.getAllRoles);
+router.get('/roles', rolesController.getAllRoles);
 module.exports = router;

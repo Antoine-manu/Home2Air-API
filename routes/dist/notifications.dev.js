@@ -9,5 +9,5 @@ var notificationsController = require("../controllers/notificationsController");
 // console.log('router ok')
 
 
-router.get('/', notificationsController.getAllNotifications);
+router.get('/notifications', notificationsController.getAllNotifications);
 module.exports = router;

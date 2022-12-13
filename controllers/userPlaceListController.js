@@ -1,53 +1,38 @@
 const db = require('../models');
-const Sensor = db.Sensor;
+const User_place_list = db.User_place_list;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Sensor
+// Create and Save a new User_place_list
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.name) {
+	if (!req.body.user_id) {
 		res.status(400).send({
 			message: 'La pièce doit avoir un nom'
 		});
 		return;
 	}
-	if (!req.body.room_id) {
+	if (!req.body.place_id) {
 		res.status(400).send({
 			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
-	if (!req.body.createdBy) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.parameters) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-
-	// Create a Sensor
-	const sensor = {
-		name: req.body.name,
-		deleted_at: req.body.deleted_at,
-		active: req.body.active,
-		room_id: req.body.room_id,
-		createdBy: req.body.created_by,
-		parameters: req.body.parameters
+	// Create a User_place_list
+	const userPL = {
+		user_id: req.body.user_id,
+		place_id: req.body.place_id
 	};
-	console.log(Sensor);
-	// Save Sensor in the database
-	Sensor.create(sensor)
+	console.log(User_place_list);
+	// Save User_place_list in the database
+	User_place_list.create(userPL)
 		.then(data => {
 			res.send(data);
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: err.message || 'Some error occurred while creating the Sensor.'
+				message:
+					err.message ||
+					'Some error occurred while creating the User_place_list.'
 			});
 		});
 };
