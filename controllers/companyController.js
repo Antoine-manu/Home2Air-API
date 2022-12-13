@@ -57,6 +57,31 @@ exports.findAll = (req, res) => {
 		});
 };
 
+// Find Companies with condition from database
+exports.findBy = (req, res) => {
+	const name = req.body.name;
+  
+	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+	console.log(condition)
+	if(condition){
+		Company.findAll({ where: condition })
+			.then(data => {
+			res.send(data);
+			})
+			.catch(err => {
+				res.status(500).send({
+					message:
+					err.message || "Some error occurred while retrieving tutorials."
+				});
+			});
+	} else {
+		res.status(500).send({
+			message:
+			"No params found"
+		});
+	}
+};
+
 // Find a single Company with an id
 exports.findOneById = (req, res) => {
 	const id = req.body.id;

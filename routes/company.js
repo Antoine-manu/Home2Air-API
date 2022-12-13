@@ -9,6 +9,9 @@ router.post('/company/create', companyController.create);
 /* POST findAll company. */
 router.post('/company/find-all', companyController.findAll);
 
+/* POST findOne company. */
+router.post('/company/find-by', companyController.findBy);
+
 /* POST findOneById company. */
 router.post('/company/find-one-by-id', companyController.findOneById);
 
