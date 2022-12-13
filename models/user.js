@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Place, {
         through: "user_place_list",
       });
-      this.belongsToMany(Roles, {
+      this.hasOne(Roles, {
         foreignKey: "roles_id",
       });
       this.belongsTo(Company, {

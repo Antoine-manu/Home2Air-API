@@ -4,8 +4,7 @@ const companyController = require("../controllers/companyController")
 
 
 /* GET home page. */
-// console.log('router ok')
-router.get('/company', companyController.getAllCompanies);
+router.post('/company/create', companyController.create);
 
 
 module.exports = router;

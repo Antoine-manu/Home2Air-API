@@ -3,6 +3,10 @@ const express = require('express');
 
 const app = express();
 
+// Body parsers
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 try{
     app 
         .use('/api/v1', require('./routes/company'))
