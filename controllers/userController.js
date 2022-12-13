@@ -1,6 +1,8 @@
 const db = require('../models');
 const User = db.User;
 const Op = db.Sequelize.Op;
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -13,65 +15,45 @@ exports.create = (req, res) => {
 	}
 	if (!req.body.first_name) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: "L'utilisateur doit avoir un prénom"
 		});
 		return;
 	}
 	if (!req.body.last_name) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: "L'utilisateur doit avoir nom de famille"
 		});
 		return;
 	}
 	if (!req.body.email) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: "L'utilisateur doit avoir un email"
 		});
 		return;
 	}
-	if (!req.body.role_id) {
+	if (!req.body.password) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: "L'utilisateur doit avoir un mot de passe"
 		});
 		return;
-	}
-	if (!req.body.token) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.created_at) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.deleted_at) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.active) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
+	};
 	// Create a User
+	const hash = bcrypt.hashSync(req.body.password, 8)
+
 	const user = {
 		username: req.body.username,
 		first_name: req.body.first_name,
 		last_name: req.body.last_name,
 		email: req.body.email,
-		role_id: req.body.role_id,
-		token: req.body.token,
-		created_at: req.body.created_at,
-		deleted_at: req.body.deleted_at,
-		active: req.body.active
+		password: hash,
+		role_id: 1,
+		token: null,
+		deleted_at: null,
+		active: false
 	};
-	console.log(User);
+
+	
+	console.log(user);
 	// Save User in the database
 	User.create(user)
 		.then(data => {

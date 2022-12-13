@@ -35,9 +35,6 @@ module.exports = {
       token: {
         type: Sequelize.STRING
       },
-      created_at: {
-        type: Sequelize.DATE
-      },
       deleted_at: {
         type: Sequelize.DATE
       },

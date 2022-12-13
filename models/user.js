@@ -37,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     role_id: DataTypes.INTEGER,
     token: DataTypes.STRING,
-    created_at: DataTypes.DATE,
     deleted_at: DataTypes.DATE,
     active: DataTypes.BOOLEAN
   }, {
