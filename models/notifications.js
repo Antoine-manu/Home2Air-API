@@ -10,17 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({User, Notifications_sound, Notifications_icon, Notifications_types}) {
-      this.hasOne(User, {
+      this.belongsTo(User, {
         foreignKey: "user_id",
       });
-      this.hasOne(Notifications_sound, {
-        foreignKey: "notifcation_id",
+      this.belongsTo(Notifications_sound, {
+        foreignKey: "sound_id",
       });
-      this.hasOne(Notifications_icon, {
+      this.belongsTo(Notifications_icon, {
         foreignKey: "icon_id",
       });
-      this.hasOne(Notifications_types, {
-        foreignKey: "types_id",
+      this.belongsTo(Notifications_types, {
+        foreignKey: "type",
       });
     }
   }

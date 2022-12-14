@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({Tickets}) {
-      this.hasOne(Tickets, {
+      this.belongsTo(Tickets, {
         foreignKey: "ticket_id",
       });
     }

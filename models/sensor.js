@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(User, {
         foreignKey: "createdBy",
       });
-      this.hasOne(Room, {
+      this.belongsTo(Room, {
         foreignKey: "room_id",
       });
     }
