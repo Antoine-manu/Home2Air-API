@@ -8,12 +8,6 @@ const bcrypt = require('bcrypt');
 // Create and Save a new User
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.username) {
-		res.status(400).send({
-			message: 'La pièce doit avoir un nom'
-		});
-		return;
-	}
 	if (!req.body.first_name) {
 		res.status(400).send({
 			message: "L'utilisateur doit avoir un prénom"
@@ -68,7 +62,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
 	User.findAll({
 		include: ['Sensor', 'Tickets', 'Notifications', 'Place', 'Role', 'Company'],
@@ -80,12 +74,12 @@ exports.findAll = (req, res) => {
 			res.status(500).send({
 				error:err,
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving Userss.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find Users with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -99,7 +93,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving Users.'
 				});
 			});
 	} else {
@@ -126,7 +120,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving Userss.' + id
 			});
 		});
 };
@@ -176,7 +170,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete User with id=' + id
 			});
 		});
 };
