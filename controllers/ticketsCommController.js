@@ -5,27 +5,15 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Tickets_commentaire
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.name) {
+	if (!req.body.content) {
 		res.status(400).send({
-			message: 'La pièce doit avoir un nom'
+			message: 'Le message ne peut pas etre vide'
 		});
 		return;
 	}
-	if (!req.body.room_id) {
+	if (!req.body.user_id) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.createdBy) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.parameters) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: 'Le message doit etre ecris par un utilisateur'
 		});
 		return;
 	}
@@ -33,7 +21,8 @@ exports.create = (req, res) => {
 	// Create a Tickets_commentaire
 	const tickets_comm = {
 		tickets_id: req.body.tickets_id,
-		content: req.body.content
+		content: req.body.content,
+		user_id: req.body.user_id
 	};
 	console.log(Tickets_commentaire);
 	// Save Tickets_commentaire in the database
@@ -50,7 +39,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all ticket commentaires from the database.
 exports.findAll = (req, res) => {
 	Tickets_commentaire.findAll()
 		.then(data => {
@@ -59,12 +48,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving ticket commentairess.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find ticket commentaires with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -78,7 +67,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving ticket commentaires.'
 				});
 			});
 	} else {
@@ -105,7 +94,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving ticket commentairess.' + id
 			});
 		});
 };
@@ -155,7 +144,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete ticket commentaire with id=' + id
 			});
 		});
 };

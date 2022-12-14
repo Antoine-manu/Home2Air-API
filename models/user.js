@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "createdBy",
         as: "Tickets"
       });
+      this.belongsTo(Tickets_commentaire, {
+        foreignKey: "id",
+        as: "Tickets_commentaire"
+      });
       this.hasMany(Sensor, {
         foreignKey: "createdBy",
         as: "Sensor"
