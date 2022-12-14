@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({Tickets}) {
       this.belongsTo(Tickets, {
         foreignKey: "ticket_id",
+        as: "Ticket"
       });
     }
   }

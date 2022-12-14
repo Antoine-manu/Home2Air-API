@@ -12,28 +12,32 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({Place, Roles, Company, Notifications, Tickets, Sensor}) {
+      console.log()
       this.belongsToMany(Place, {
         through: "user_place_list",
         foreignKey: "user_id",
-        otherKey: "place_id"
+        otherKey: "place_id",
+        as: "Place"
       });
       this.belongsTo(Roles, {
         foreignKey: "role_id",
+        as: "Role"
       });
       this.belongsTo(Company, {
-        foreignKey: "user_id",
+        foreignKey: "id",
+        as: "Company"
       });
       this.hasMany(Notifications, {
         foreignKey: "user_id",
+        as: "Notifications"
       });
       this.hasMany(Tickets, {
         foreignKey: "createdBy",
-      });
-      this.hasMany(Tickets, {
-        foreignKey: "updatedBy",
+        as: "Tickets"
       });
       this.hasMany(Sensor, {
         foreignKey: "createdBy",
+        as: "Sensor"
       });
     }
   }
@@ -49,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     active: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'User'
   });
   return User;
 };

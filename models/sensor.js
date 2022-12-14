@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({User, Room}) {
       this.hasOne(User, {
-        foreignKey: "createdBy",
+        foreignKey: "id",
+        as: "CreatedByUser"
       });
       this.belongsTo(Room, {
         foreignKey: "room_id",
+        as: "Room"
       });
     }
   }

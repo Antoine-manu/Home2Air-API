@@ -12,15 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate({User, Notifications_sound, Notifications_icon, Notifications_types}) {
       this.belongsTo(User, {
         foreignKey: "user_id",
+        as: "User"
       });
       this.belongsTo(Notifications_sound, {
         foreignKey: "sound_id",
+        as: "NotificationSound"
       });
       this.belongsTo(Notifications_icon, {
         foreignKey: "icon_id",
+        as: "NotificationIcon"
       });
       this.belongsTo(Notifications_types, {
         foreignKey: "type",
+        as: "NotificationType"
       });
     }
   }

@@ -1,5 +1,6 @@
-const db = require('../models');
-const User = db.User;
+const db = require('../models/index.js');
+const User = db['User']
+// const User = db.User
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -69,12 +70,15 @@ exports.create = (req, res) => {
 
 // Retrieve all Companies from the database.
 exports.findAll = (req, res) => {
-	User.findAll()
+	User.findAll({
+		include: ['Sensor', 'Tickets', 'Notifications', 'Place', 'Role', 'Company'],
+	})
 		.then(data => {
 			res.send(data);
 		})
 		.catch(err => {
 			res.status(500).send({
+				error:err,
 				message:
 					err.message || 'Some error occurred while retrieving Companiess.'
 			});

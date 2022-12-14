@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({User}) {
       this.hasOne(User, {
-        foreignKey: "user_id",
+        foreignKey: "id",
+        as: "User"
       });
     }
   }

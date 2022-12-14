@@ -17,13 +17,6 @@ module.exports = {
           key: 'id'
         }
       },
-      updated_by: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: 'id'
-        }
-      },
       status: {
         type: Sequelize.INTEGER
       },

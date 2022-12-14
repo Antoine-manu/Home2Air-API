@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate({Place, Sensor}) {
       this.belongsTo(Place, {
         foreignKey: "place_id",
+        as: "Place"
       });
       this.hasMany(Sensor, {
-        foreignKey: "sensor_id",
+        foreignKey: "id",
+        as: "Sensor"
       });
     }
   }

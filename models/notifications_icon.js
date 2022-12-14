@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({Notifications}) {
       this.hasMany(Notifications, {
         foreignKey: "icon_id",
+        as: "Icon"
       });
     }
   }
