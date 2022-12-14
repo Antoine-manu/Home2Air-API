@@ -10,19 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({Tickets_commentaire, User}) {
-      this.hasOne(User, {
-        foreignKey: "created_by",
+      this.belongsTo(User, {
+        foreignKey: "createdBy",
       });
-      this.belongsTo(Tickets_commentaire, { 
-        foreignKey: "ticket_commentaire_id",
+      this.belongsTo(User, {
+        foreignKey: "updatedBy",
+      });
+      this.hasMany(Tickets_commentaire, { 
+        foreignKey: "ticket_id",
       });
       
     }
   }
   Tickets.init({
-    created_at: DataTypes.DATE,
-    created_by: DataTypes.INTEGER,
-    updated_at: DataTypes.DATE,
+    createdBy: DataTypes.INTEGER,
     updated_by: DataTypes.INTEGER,
     status: DataTypes.INTEGER,
     title: DataTypes.STRING

@@ -2,14 +2,17 @@ const db = require('../models');
 const User = db.User;
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 /* Log user */
 exports.login = (req, res) => {
 	const token = req.body.token
 
 	if(!token){
-		User.findOne({ email: req.body.email })
+        console.log('ok')
+		User.findOne({where :{ email: req.body.email }})
 		.then(user => {
+            console.log(user)
 			if (!user) {
 				return res.status(401).json({ error: 'Utilisateur non trouvé !' });
 			}
@@ -19,9 +22,9 @@ exports.login = (req, res) => {
 						return res.status(401).json({ error: 'Mot de passe incorrect !' });
 					}
 					res.status(200).json({
-						userId: user._id,
+						userId: user.id,
 						token: jwt.sign(
-							{ userId: user._id },
+							{ userId: user.id },
 							 'k9zo6QGCjIWzpJ1H82yQ',
 							{ expiresIn: '24h' }
 						)

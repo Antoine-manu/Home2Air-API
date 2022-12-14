@@ -10,18 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      created_at: {
-        type: Sequelize.DATE
-      },
-      created_by: {
+      createdBy: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
           key: 'id'
         }
-      },
-      updated_at: {
-        type: Sequelize.DATE
       },
       updated_by: {
         type: Sequelize.INTEGER,
