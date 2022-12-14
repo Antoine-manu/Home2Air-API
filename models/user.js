@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 const roles = require('./roles');
-const tickets_commentaire = require('./tickets_commentaire');
 const User_place_list = require('./user_place_list');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -12,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Place, Roles, Company, Notifications, Tickets, Sensor, Tickets_commentaire}) {
+    static associate({Place, Roles, Company, Notifications, Tickets, Sensor}) {
       console.log()
       this.belongsToMany(Place, {
         through: "user_place_list",
@@ -35,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Tickets, {
         foreignKey: "createdBy",
         as: "Tickets"
-      });
-      this.hasMany(Tickets_commentaire, {
-        foreignKey: "user_id",
-        as: "Tickets_Commentaires"
       });
       this.hasMany(Sensor, {
         foreignKey: "createdBy",

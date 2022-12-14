@@ -11,6 +11,18 @@ exports.create = (req, res) => {
 		});
 		return;
 	}
+	if (!req.body.room_id) {
+		res.status(400).send({
+			message: 'La pièce doit être attribuée à un endroit'
+		});
+		return;
+	}
+	if (!req.body.createdBy) {
+		res.status(400).send({
+			message: 'La pièce doit être attribuée à un endroit'
+		});
+		return;
+	}
 	if (!req.body.parameters) {
 		res.status(400).send({
 			message: 'La pièce doit être attribuée à un endroit'
@@ -38,7 +50,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all ticket commentaire from the database.
+// Retrieve all Companies from the database.
 exports.findAll = (req, res) => {
 	Tickets_commentaire.findAll()
 		.then(data => {
@@ -47,12 +59,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving ticket commentaires.'
+					err.message || 'Some error occurred while retrieving Companiess.'
 			});
 		});
 };
 
-// Find ticket commentaire with condition from database
+// Find Companies with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -66,7 +78,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving ticket commentaires.'
+						err.message || 'Some error occurred while retrieving tutorials.'
 				});
 			});
 	} else {
@@ -93,7 +105,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving ticket commentaires.' + id
+					err.message || 'Some error occurred while retrieving Companiess.' + id
 			});
 		});
 };
@@ -143,7 +155,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete ticket commentaire with id=' + id
+				message: 'Could not delete Tutorial with id=' + id
 			});
 		});
 };

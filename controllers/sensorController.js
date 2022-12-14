@@ -7,13 +7,25 @@ exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.name) {
 		res.status(400).send({
-			message: 'La capteur doit avoir un nom'
+			message: 'La pièce doit avoir un nom'
+		});
+		return;
+	}
+	if (!req.body.room_id) {
+		res.status(400).send({
+			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
 	if (!req.body.createdBy) {
 		res.status(400).send({
-			message: 'Le capteur doit avoir un créateur'
+			message: 'La pièce doit être attribuée à un endroit'
+		});
+		return;
+	}
+	if (!req.body.parameters) {
+		res.status(400).send({
+			message: 'La pièce doit être attribuée à un endroit'
 		});
 		return;
 	}
@@ -21,7 +33,7 @@ exports.create = (req, res) => {
 	// Create a Sensor
 	const sensor = {
 		name: req.body.name,
-		deleted_at: null,
+		deleted_at: req.body.deleted_at,
 		active: req.body.active,
 		room_id: req.body.room_id,
 		createdBy: req.body.created_by,
@@ -40,7 +52,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all sensor from the database.
+// Retrieve all Companies from the database.
 exports.findAll = (req, res) => {
 	Sensor.findAll()
 		.then(data => {
@@ -49,12 +61,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving sensors.'
+					err.message || 'Some error occurred while retrieving Companiess.'
 			});
 		});
 };
 
-// Find sensor with condition from database
+// Find Companies with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -68,7 +80,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving sensors.'
+						err.message || 'Some error occurred while retrieving tutorials.'
 				});
 			});
 	} else {
@@ -95,7 +107,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving sensors.' + id
+					err.message || 'Some error occurred while retrieving Companiess.' + id
 			});
 		});
 };
@@ -145,7 +157,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete sensor with id=' + id
+				message: 'Could not delete Tutorial with id=' + id
 			});
 		});
 };
