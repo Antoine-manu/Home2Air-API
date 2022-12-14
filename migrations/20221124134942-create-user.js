@@ -35,9 +35,6 @@ module.exports = {
       token: {
         type: Sequelize.STRING
       },
-      deleted_at: {
-        type: Sequelize.DATE
-      },
       active: {
         type: Sequelize.BOOLEAN
       },
