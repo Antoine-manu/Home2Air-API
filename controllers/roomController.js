@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all room from the database.
 exports.findAll = (req, res) => {
 	Room.findAll()
 		.then(data => {
@@ -45,12 +45,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving rooms.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find room with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -64,7 +64,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving rooms.'
 				});
 			});
 	} else {
@@ -91,7 +91,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving rooms.' + id
 			});
 		});
 };
@@ -141,7 +141,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete room with id=' + id
 			});
 		});
 };

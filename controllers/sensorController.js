@@ -7,25 +7,7 @@ exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.name) {
 		res.status(400).send({
-			message: 'La pièce doit avoir un nom'
-		});
-		return;
-	}
-	if (!req.body.room_id) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.createdBy) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.parameters) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: 'Le capteur doit avoir un nom'
 		});
 		return;
 	}
@@ -52,7 +34,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all sensors from the database.
 exports.findAll = (req, res) => {
 	Sensor.findAll()
 		.then(data => {
@@ -61,12 +43,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving sensorss.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find sensors with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -80,7 +62,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving sensors.'
 				});
 			});
 	} else {
@@ -107,7 +89,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving sensorss.' + id
 			});
 		});
 };
@@ -157,7 +139,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete sensor with id=' + id
 			});
 		});
 };

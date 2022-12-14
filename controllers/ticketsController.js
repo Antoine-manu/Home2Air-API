@@ -5,39 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Tickets
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.user_id) {
-		res.status(400).send({
-			message: 'La pièce doit avoir un nom'
-		});
-		return;
-	}
-	if (!req.body.created_at) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
 	if (!req.body.created_by) {
 		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.updated_at) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.updated_by) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
-		});
-		return;
-	}
-	if (!req.body.status) {
-		res.status(400).send({
-			message: 'La pièce doit être attribuée à un endroit'
+			message: 'La ticket doit etre créer par un utilisateur'
 		});
 		return;
 	}
@@ -49,12 +19,8 @@ exports.create = (req, res) => {
 	}
 	// Create a Tickets
 	const tickets = {
-		user_id: req.body.user_id,
-		created_at: req.body.created_at,
 		created_by: req.body.created_by,
-		updated_at: req.body.updated_at,
-		updated_by: req.body.updated_by,
-		status: req.body.status,
+		status: 0,
 		title: req.body.title
 	};
 	console.log(Tickets);
@@ -71,7 +37,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all Tickets from the database.
 exports.findAll = (req, res) => {
 	Tickets.findAll()
 		.then(data => {
@@ -80,12 +46,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving Ticketss.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find Tickets with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -99,7 +65,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving Tickets.'
 				});
 			});
 	} else {
@@ -126,7 +92,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving Ticketss.' + id
 			});
 		});
 };
@@ -176,7 +142,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete Ticket with id=' + id
 			});
 		});
 };

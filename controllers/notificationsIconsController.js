@@ -7,7 +7,7 @@ exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.name) {
 		res.status(400).send({
-			message: 'Le rôle doit avoir un nom'
+			message: "L'icon doit avoir un nom"
 		});
 		return;
 	}
@@ -24,12 +24,12 @@ exports.create = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: err.message || 'Some error occurred while creating the NotificationIcon.'
+				message: err.message || 'Some error occurred while creating the Notification Icon.'
 			});
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all Notification icon from the database.
 exports.findAll = (req, res) => {
 	NotificationIcon.findAll()
 		.then(data => {
@@ -38,12 +38,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving Notification icon.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find Notification icon with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -57,7 +57,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving notification icons.'
 				});
 			});
 	} else {
@@ -84,7 +84,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving Notification icon.' + id
 			});
 		});
 };

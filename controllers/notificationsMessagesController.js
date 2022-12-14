@@ -7,7 +7,7 @@ exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.name) {
 		res.status(400).send({
-			message: 'Le rôle doit avoir un nom'
+			message: 'Le message ne peut pas etre vide'
 		});
 		return;
 	}
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all notification Msg from the database.
 exports.findAll = (req, res) => {
 	NotificationMsg.findAll()
 		.then(data => {
@@ -38,12 +38,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving notification Msgs.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find notification Msg with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -57,7 +57,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving notificationMsgs.'
 				});
 			});
 	} else {
@@ -84,7 +84,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving notification Msgs.' + id
 			});
 		});
 };
@@ -134,7 +134,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete notificationMsg with id=' + id
 			});
 		});
 };
