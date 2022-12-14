@@ -5,9 +5,21 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Notification
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.name) {
+	if (!req.body.title) {
 		res.status(400).send({
-			message: 'Le rôle doit avoir un nom'
+			message: 'La notification doit avoir un titre'
+		});
+		return;
+	}
+	if (!req.body.message) {
+		res.status(400).send({
+			message: 'La notification doit avoir un message'
+		});
+		return;
+	}
+	if (!req.body.date) {
+		res.status(400).send({
+			message: 'La notification doit avoir une écheance'
 		});
 		return;
 	}
@@ -16,9 +28,13 @@ exports.create = (req, res) => {
 	const notifications = {
 		user_id: req.body.user_id,
 		custom: req.body.custom,
-		read: req.body.read,
+		read: false,
 		type: req.body.type,
-		date: req.body.date
+		title: req.body.title,
+		date: req.body.date,
+		message: req.body.message,
+		icon_id: req.body.icon_id,
+		sound_id: req.body.sound_id
 	};
 	console.log(Notification);
 	// Save Notification in the database
@@ -34,7 +50,7 @@ exports.create = (req, res) => {
 		});
 };
 
-// Retrieve all Companies from the database.
+// Retrieve all Notifications from the database.
 exports.findAll = (req, res) => {
 	notifications.findAll()
 		.then(data => {
@@ -43,12 +59,12 @@ exports.findAll = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.'
+					err.message || 'Some error occurred while retrieving Notifications.'
 			});
 		});
 };
 
-// Find Companies with condition from database
+// Find Notifications with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
@@ -62,7 +78,7 @@ exports.findBy = (req, res) => {
 			.catch(err => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving tutorials.'
+						err.message || 'Some error occurred while retrieving notifications.'
 				});
 			});
 	} else {
@@ -89,7 +105,7 @@ exports.findOneById = (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Companiess.' + id
+					err.message || 'Some error occurred while retrieving Notifications.' + id
 			});
 		});
 };
@@ -139,7 +155,7 @@ exports.delete = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Could not delete Tutorial with id=' + id
+				message: 'Could not delete Notification with id=' + id
 			});
 		});
 };
