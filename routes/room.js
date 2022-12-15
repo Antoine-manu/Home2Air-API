@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const roomController = require("../controllers/roomController")
-
+const roomController = require("../controllers/roomController");
+const auth = require('../middleware/auth');
 
 
 /* POST create room. */
-router.post('/room/create', roomController.create);
+router.post('/room/create', auth, roomController.create);
 
 /* POST findAll room. */
-router.post('/room/find-all', roomController.findAll);
+router.post('/room/find-all', auth, roomController.findAll);
 
 /* POST findOne room. */
-router.post('/room/find-by', roomController.findBy);
+router.post('/room/find-by', auth, roomController.findBy);
 
 /* POST findOneById room. */
-router.post('/room/find-one-by-id', roomController.findOneById);
+router.post('/room/find-one-by-id', auth, roomController.findOneById);
 
 /* POST update room. */
-router.post('/room/update', roomController.update);
+router.post('/room/update', auth, roomController.update);
 
 /* POST delete room. */
-router.post('/room/delete', roomController.delete);
+router.post('/room/delete', auth, roomController.delete);
 
 
 
