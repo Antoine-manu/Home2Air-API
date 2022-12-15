@@ -3,7 +3,7 @@ const User = db.User;
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+const tokenKey = 'k9zo6QGCjIWzpJ1H82yQ'
 /* Log user */
 exports.login = (req, res) => {
 	const token = req.body.token
@@ -21,24 +21,13 @@ exports.login = (req, res) => {
 				res.status(200).json({
 					userId: user.id,
 					token: jwt.sign(
-						{ userId: user.id },
-							'k9zo6QGCjIWzpJ1H82yQ',
+						{user},
+						tokenKey,
 						{ expiresIn: '24h' }
 					)
 				});
 			})
 			.catch(error => res.status(500).json({ error }));
 	})
-	.catch(error => res.status(500).json({ error }));
-
-	// jwt.verify(token, 'k9zo6QGCjIWzpJ1H82yQ', (err, user) => {
-	// 	if (err) {
-	// 		return res.sendStatus(401).json({error: "Token incorrect"})
-	// 	}
-	// 	else{
-	// 		req.user = user;
-	// 		next();
-	// 	}
-	// });
-	
+	.catch(error => res.status(500).json({ error }));	
 }
