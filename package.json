@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "npx sequelize-cli db:seed --seed .\\seeders\\20221215093100-roles.js .\\seeders\\20221214132822-user.js .\\seeders\\20221214143719-place.js .\\seeders\\20221214143324-room.js .\\seeders\\20221214142648-sensor.js .\\seeders\\20221214143324-room.js .\\seeders\\20221215084745-notifications_sound.js .\\seeders\\20221214135429-user_place_list.js .\\seeders\\20221214135823-tickets.js .\\seeders\\20221214142240-tickets_commentaire.js .\\seeders\\20221214143905-notifications.js .\\seeders\\20221214144454-company.js"
   },
   "author": "Antoine Gaudry",
   "license": "ISC",
