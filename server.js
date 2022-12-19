@@ -17,6 +17,7 @@ try {
 		.use('/api/v1', require('./routes/room'))
 		.use('/api/v1', require('./routes/routes'))
 		.use('/api/v1', require('./routes/sensor'))
+		.use('/api/v1', require('./routes/invite'))
 		.use('/api/v1', require('./routes/tickets'))
 		.use('/api/v1', require('./routes/user'))
 		.use('/api/v1', require('./routes/auth'));
