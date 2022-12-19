@@ -20,10 +20,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "room_id",
         as: "Room"
       });
+      this.belongsTo(User, {
+        foreignKey: "id",
+        as: "Owner"
+      });
     }
   }
   Place.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    createdBy: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Place',

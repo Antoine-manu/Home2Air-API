@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "role_id",
         as: "Role"
       });
+      this.hasMany(Place, {
+        foreignKey: "createdBy",
+        as: "place_created"
+      });
       this.belongsTo(Company, {
         foreignKey: "id",
         as: "Company"
