@@ -65,7 +65,7 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
 	User.findAll({
-		include: ['Sensor', 'Tickets', 'Notifications', 'Place', 'Role', 'Company'],
+		include: ['Sensor', 'Tickets', 'Notifications', 'Place', 'Role', 'Company', 'Place_created','InvitesRecieved', 'InvitesSent'],
 	})
 		.then(data => {
 			res.send(data);
@@ -145,7 +145,8 @@ exports.update = (req, res) => {
 		})
 		.catch(err => {
 			res.status(500).send({
-				message: 'Error updating User with id=' + id
+				message: 'Error updating User with id=' + id,
+				error : err
 			});
 		});
 };

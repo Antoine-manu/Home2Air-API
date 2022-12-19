@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sensorController = require("../controllers/sensorController");
-const adminCheck = require('../middleware/auth');
+const adminCheck = require('../middleware/adminCheck');
 const auth = require('../middleware/auth');
 
 
@@ -27,9 +27,9 @@ router.post('/sensor/delete', adminCheck, sensorController.delete);
 router.post('/sensor/delete', auth, sensorController.delete);
 
 /* POST get sensor's room. */
-router.post('/sensor/getroom', auth, sensorController.getRoom);
+// router.post('/sensor/getroom', auth, sensorController.getRoom);
 
 /* POST disable sensor. */
-router.post('/sensor/disable', auth, sensorController.disable);
+// router.post('/sensor/disable', auth, sensorController.disable);
 
 module.exports = router;
