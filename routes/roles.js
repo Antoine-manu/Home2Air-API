@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const rolesController = require("../controllers/rolesController");
-const adminCheck = require('../middleware/auth');
+const adminCheck = require('../middleware/adminCheck');
 const auth = require('../middleware/auth');
 
 
 /* POST create roles. */
-router.post('/roles/create', auth, rolesController.create);
+router.post('/roles/create', rolesController.create);
 
 /* POST findAll roles. */
 router.post('/roles/find-all', auth, rolesController.findAll);
@@ -18,7 +18,7 @@ router.post('/roles/find-by', auth, rolesController.findBy);
 router.post('/roles/find-one-by-id', auth, rolesController.findOneById);
 
 /* POST update roles. */
-router.post('/roles/update', auth, rolesController.update);
+router.post('/roles/update/:id', auth, rolesController.update);
 
 /* POST delete roles. */
 router.post('/roles/delete', auth, rolesController.delete);
