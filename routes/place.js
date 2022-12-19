@@ -17,16 +17,14 @@ router.post('/place/find-by', auth, placeController.findBy);
 router.post('/place/find-one-by-id', auth, placeController.findOneById);
 
 /* POST update place. */
-router.post('/place/update', auth, placeController.update);
+router.post('/place/update/:id', auth, placeController.update);
 
 /* POST delete place. */
 router.post('/place/delete', auth, placeController.delete);
 
-/* POST delete place. */
-router.post('/place/invite', auth, placeController.invite);
 
 /* POST delete place. */
-router.post('/place/join', auth, placeController.join);
+// router.post('/place/join', auth, placeController.join);
 
 
 

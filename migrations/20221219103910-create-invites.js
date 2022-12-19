@@ -10,13 +10,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userTo: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: 'id'
+        }
       },
       userFrom: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: 'id'
+        }
       },
       isAccpected: {
         type: Sequelize.BOOLEAN
+      },
+      place_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Places",
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
