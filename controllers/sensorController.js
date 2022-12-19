@@ -143,3 +143,25 @@ exports.delete = (req, res) => {
 			});
 		});
 };
+
+//Get sensor's room
+exports.getroom() = (req, res ) => {
+	const sensorId = req.body.id;
+
+	Sensor.findAll(id, {include: ['Room']})
+		.then(data => {
+			if (data) {
+				res.send(data);
+			} else {
+				res.status(404).send({
+					message: `Cannot find Sensor's room with id=${id}.`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || "Some error occurred while retrieving sensors's room." + id
+			});
+		});
+}
