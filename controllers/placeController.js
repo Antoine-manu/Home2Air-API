@@ -1,5 +1,6 @@
 const db = require('../models');
 const Place = db.Place;
+const UserPlaceList = db.user_place_list;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Place
@@ -14,13 +15,25 @@ exports.create = (req, res) => {
 
 	// Create a Place
 	const places = {
-		name: req.body.name
+		name: req.body.name,
+		createdBy : req.body.createdBy
 	};
-	console.log(Place);
 	// Save Place in the database
 	Place.create(places)
 		.then(data => {
-			res.send(data);
+			const tableTransverse = {
+				user_id : req.body.createdBy,
+				place_id : data.id
+			}
+			UserPlaceList.create(tableTransverse)
+				.then(data => {
+					res.send(data);
+				})
+				.catch(err => {
+					res.status(500).send({
+						message: err.message || 'Some error occurred while creating the PlaceList.'
+					});
+				});
 		})
 		.catch(err => {
 			res.status(500).send({
