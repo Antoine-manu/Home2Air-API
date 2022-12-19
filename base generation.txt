@@ -9,6 +9,7 @@ npx sequelize model:generate --name Notifications_messages --attributes message:
 npx sequelize model:generate --name User_place_list --attributes user_id:integer,place_id:integer
 npx sequelize model:generate --name Place --attributes name:string
 // npx sequelize model:generate --name Room --attributes name:string,room_list_id:integer,place_id:integer
+npx sequelize model:generate --name Invites --attributes userTo:integer,userFrom:integer,isAccpected:boolean
 
 npx sequelize model:generate --name Notifications_sound --attributes name:string
 npx sequelize model:generate --name Notifications_icon --attributes name:string
