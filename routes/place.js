@@ -22,6 +22,12 @@ router.post('/place/update', auth, placeController.update);
 /* POST delete place. */
 router.post('/place/delete', auth, placeController.delete);
 
+/* POST delete place. */
+router.post('/place/invite', auth, placeController.invite);
+
+/* POST delete place. */
+router.post('/place/join', auth, placeController.join);
+
 
 
 module.exports = router;
