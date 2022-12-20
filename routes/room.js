@@ -17,7 +17,7 @@ router.post('/room/find-by', auth, roomController.findBy);
 router.post('/room/find-one-by-id', auth, roomController.findOneById);
 
 /* POST update room. */
-router.post('/room/update', auth, roomController.update);
+router.post('/room/update/:id', auth, roomController.update);
 
 /* POST delete room. */
 router.post('/room/delete', auth, roomController.delete);
