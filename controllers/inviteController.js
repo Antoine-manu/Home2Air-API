@@ -70,3 +70,43 @@ exports.accept = (req, res) => {
             });
         });
 }
+
+
+// Delete a Invite with the specified id in the request
+exports.delete = (req, res) => {
+	const id = req.body.id;
+
+	Invite.destroy({
+		where: { id: id }
+	})
+		.then(num => {
+			if (num == 1) {
+				res.send({
+					message: 'Invite was deleted successfully!'
+				});
+			} else {
+				res.send({
+					message: `Cannot delete Invite with id=${id}. Maybe Invite was not found!`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message: 'Could not delete place with id=' + id
+			});
+		});
+};
+
+// Retrieve all Invites from the database.
+exports.findAll = (req, res) => {
+	Invite.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Invites.'
+			});
+		});
+};
