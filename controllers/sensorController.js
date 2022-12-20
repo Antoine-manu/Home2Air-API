@@ -15,11 +15,15 @@ exports.create = (req, res) => {
 	// Create a Sensor
 	const sensor = {
 		name: req.body.name,
-		deleted_at: req.body.deleted_at,
-		active: req.body.active,
+		deleted_at: null,
+		active: true,
 		room_id: req.body.room_id,
 		createdBy: req.body.created_by,
-		parameters: req.body.parameters
+		parameters: JSON.stringify({
+			notifications : true,
+			advanced : false,
+			temperature : 1
+		})
 	};
 	console.log(Sensor);
 	// Save Sensor in the database

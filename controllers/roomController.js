@@ -38,7 +38,7 @@ exports.create = (req, res) => {
 
 // Retrieve all room from the database.
 exports.findAll = (req, res) => {
-	Room.findAll()
+	Room.findAll({include : ['Sensor']})
 		.then(data => {
 			res.send(data);
 		})
