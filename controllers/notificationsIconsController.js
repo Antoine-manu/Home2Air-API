@@ -16,7 +16,6 @@ exports.create = (req, res) => {
 	const notifIcon = {
 		name: req.body.name
 	};
-	console.log(NotificationIcon);
 	// Save NotificationIcon in the database
 	NotificationIcon.create(notifIcon)
 		.then(data => {
