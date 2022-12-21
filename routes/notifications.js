@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const notificationsController = require("../controllers/notificationsController.js")
+const notificationsConfigController = require("../controllers/notificationsConfigController.js")
+const notificationsIconsController = require("../controllers/notificationsIconsController.js")
 const auth = require('../middleware/auth');
-
-/* GET home page. */
-// console.log('router ok')
 
 /* POST create notifications. */
 router.post('/notifications/create', auth, notificationsController.create);
@@ -19,10 +18,50 @@ router.post('/notifications/find-by', auth, notificationsController.findBy);
 router.post('/notifications/find-one-by-id', auth, notificationsController.findOneById);
 
 /* POST update notifications. */
-router.post('/notifications/update', auth, notificationsController.update);
+router.post('/notifications/update/:id', auth, notificationsController.update);
 
 /* POST delete notifications. */
 router.post('/notifications/delete', auth, notificationsController.delete);
+
+
+
+/* POST create notifications config. */
+router.post('/notifications-config/create', auth, notificationsConfigController.create);
+
+/* POST findAll notifications config. */
+router.post('/notifications-config/find-all', auth, notificationsConfigController.findAll);
+
+/* POST findOne notifications config. */
+router.post('/notifications-config/find-by', auth, notificationsConfigController.findBy);
+
+/* POST findOneById notifications config. */
+router.post('/notifications-config/find-one-by-id', auth, notificationsConfigController.findOneById);
+
+/* POST update notifications config. */
+router.post('/notifications-config/update/:id', auth, notificationsConfigController.update);
+
+/* POST delete notifications config. */
+router.post('/notifications-config/delete', auth, notificationsConfigController.delete);
+
+
+
+/* POST create notifications Icon. */
+router.post('/notifications-icons/create', auth, notificationsIconsController.create);
+
+/* POST findAll notifications Icon. */
+router.post('/notifications-icons/find-all', auth, notificationsIconsController.findAll);
+
+/* POST findOne notifications Icon. */
+router.post('/notifications-icons/find-by', auth, notificationsIconsController.findBy);
+
+/* POST findOneById notifications Icon. */
+router.post('/notifications-icons/find-one-by-id', auth, notificationsIconsController.findOneById);
+
+/* POST update notifications Icon. */
+router.post('/notifications-icons/update/:id', auth, notificationsIconsController.update);
+
+/* POST delete notifications Icon. */
+router.post('/notifications-icons/delete', auth, notificationsIconsController.delete);
 
 
 module.exports = router;
