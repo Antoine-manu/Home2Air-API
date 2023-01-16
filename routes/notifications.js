@@ -3,6 +3,7 @@ const router = express.Router();
 const notificationsController = require("../controllers/notificationsController.js")
 const notificationsConfigController = require("../controllers/notificationsConfigController.js")
 const notificationsIconsController = require("../controllers/notificationsIconsController.js")
+const notificationsSoundsController = require("../controllers/notificationsSoundController.js")
 const auth = require('../middleware/auth');
 
 /* POST create notifications. */
@@ -62,6 +63,26 @@ router.post('/notifications-icons/update/:id', auth, notificationsIconsControlle
 
 /* POST delete notifications Icon. */
 router.post('/notifications-icons/delete', auth, notificationsIconsController.delete);
+
+
+
+/* POST create notifications sound. */
+router.post('/notifications-sounds/create', auth, notificationsSoundsController.create);
+
+/* POST findAll notifications sound. */
+router.post('/notifications-sounds/find-all', auth, notificationsSoundsController.findAll);
+
+/* POST findOne notifications sound. */
+router.post('/notifications-sounds/find-by', auth, notificationsSoundsController.findBy);
+
+/* POST findOneById notifications sound. */
+router.post('/notifications-sounds/find-one-by-id', auth, notificationsSoundsController.findOneById);
+
+/* POST update notifications sound. */
+router.post('/notifications-sounds/update/:id', auth, notificationsSoundsController.update);
+
+/* POST delete notifications sound. */
+router.post('/notifications-sounds/delete', auth, notificationsSoundsController.delete);
 
 
 module.exports = router;

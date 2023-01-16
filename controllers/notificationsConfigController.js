@@ -1,5 +1,5 @@
 const db = require('../models');
-const NotificationsConfig = db.NotificationsConfig;
+const NotificationsConfig = db.Notifications_config;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Notification's config
