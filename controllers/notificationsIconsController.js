@@ -1,7 +1,6 @@
 const db = require('../models');
-const NotificationIcon = db.NotificationIcon_icon;
+const NotificationIcon = db.Notifications_icon;
 const Op = db.Sequelize.Op;
-
 // Create and Save a new NotificationIcon
 exports.create = (req, res) => {
 	// Validate request
@@ -16,7 +15,6 @@ exports.create = (req, res) => {
 	const notifIcon = {
 		name: req.body.name
 	};
-	console.log(NotificationIcon);
 	// Save NotificationIcon in the database
 	NotificationIcon.create(notifIcon)
 		.then(data => {
@@ -31,6 +29,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Notification icon from the database.
 exports.findAll = (req, res) => {
+	console.log(NotificationIcon)
 	NotificationIcon.findAll()
 		.then(data => {
 			res.send(data);

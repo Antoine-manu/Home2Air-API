@@ -1,5 +1,5 @@
 const db = require('../models');
-const notifType = db.notification_types;
+const notifType = db.Notifications_types;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new notifType

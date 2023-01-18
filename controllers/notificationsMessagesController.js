@@ -1,11 +1,11 @@
 const db = require('../models');
-const NotificationMsg = db.NotificationMsg_messages;
+const NotificationMsg = db.Notifications_messages;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new NotificationMsg
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.name) {
+	if (!req.body.message) {
 		res.status(400).send({
 			message: 'Le message ne peut pas etre vide'
 		});
@@ -14,9 +14,8 @@ exports.create = (req, res) => {
 
 	// Create a NotificationMsg
 	const notifMsg = {
-		name: req.body.name
+		message: req.body.name
 	};
-	console.log(NotificationMsg);
 	// Save NotificationMsg in the database
 	NotificationMsg.create(notifMsg)
 		.then(data => {

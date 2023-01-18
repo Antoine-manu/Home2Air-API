@@ -1,53 +1,51 @@
 const db = require('../models');
-const Notification = db.Notification;
+const Notification = db.Notifications;
+const NotificationsConfig = db.Notifications_config;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Notification
 exports.create = (req, res) => {
 	// Validate request
-	if (!req.body.title) {
+	if (!req.body.config) {
 		res.status(400).send({
-			message: 'La notification doit avoir un titre'
+			message: 'La notification doit avoir une configuration'
 		});
 		return;
 	}
-	if (!req.body.message) {
-		res.status(400).send({
-			message: 'La notification doit avoir un message'
-		});
-		return;
-	}
-	if (!req.body.date) {
-		res.status(400).send({
-			message: 'La notification doit avoir une écheance'
-		});
-		return;
-	}
-
-	// Create a Notification
-	const notifications = {
-		user_id: req.body.user_id,
-		custom: req.body.custom,
-		read: false,
-		type: req.body.type,
-		title: req.body.title,
-		date: req.body.date,
-		message: req.body.message,
-		icon_id: req.body.icon_id,
-		sound_id: req.body.sound_id
-	};
-	console.log(Notification);
-	// Save Notification in the database
-	Notification.create(notifications)
-		.then(data => {
-			res.send(data);
-		})
-		.catch(err => {
-			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while creating the Notification.'
+	NotificationsConfig.findByPk(req.body.config)
+	.then(data => {
+		// Create a Notification
+		console.log(data)
+		const notifications = {
+			user_id: data.user_id,
+			custom: data.custom,
+			read: false,
+			type: data.type,
+			title: data.title,
+			date: data.date,
+			message: data.message,
+			icon_id: data.icon_id,
+			sound_id: data.sound_id
+		};
+		console.log(Notification);
+		// Save Notification in the database
+		Notification.create(notifications)
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.status(500).send({
+					message:
+						err.message || 'Some error occurred while creating the Notification.'
+				});
 			});
+	})
+	.catch(err => {
+		res.status(500).send({
+			message:
+				err.message || 'Some error occurred while getting the Notification config.'
 		});
+	});
 };
 
 // Retrieve all Notifications from the database.
