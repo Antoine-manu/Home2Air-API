@@ -17,6 +17,8 @@ npx sequelize model:generate --name Notifications_config --attributes title:stri
 npx sequelize model:generate --name User --attributes username:string,first_name:string,last_name:string,email:string,role_id:integer,token:string,created_at:date,deleted_at:date,active:boolean,user_place_list_id:integer
 
 
+npx sequelize model:generate --name Datas --attributes reference:string,ammoniac:integer,date:date,humidity:integer,light:integer,oxidesed:integer,particules0:integer,particules1:integer,particules2:integer,pressure:integer,reduced:integer,temperature:integer
+
 
 
 
