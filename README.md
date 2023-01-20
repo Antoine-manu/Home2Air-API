@@ -1,32 +1,32 @@
 # Getting Started
 
-## Installation des dependences
+### Installation des dependences
 ```
 npm Install
 ```
-## Base de donnée
+### Base de donnée
 
-### Création de la base
+#### Création de la base
 ```
 npx sequelize-cli db:create
 ```
 
-### Lancement des migrations 
+#### Lancement des migrations 
 ```
 npx sequelize-cli db:migrate
 ```
 
-### Generation de donnée dans la base
+#### Generation de donnée dans la base
 ```
 npx sequelize-cli db:seed:all
 ```
 
-## Lancement de l'api 
+### Lancement de l'api 
 ```
 npm run dev
 ```
 
-## Documentation de l'api
+# Documentation de l'api
 
 ### Users
 #### Create
