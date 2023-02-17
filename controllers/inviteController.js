@@ -1,8 +1,6 @@
 const db = require('../models');
-const Place = db.Place;
 const Invite = db.Invites;
 const UserPlaceList = db.user_place_list;
-const Op = db.Sequelize.Op;
 
 //Invite someone to his place
 exports.invite = (req, res) => {

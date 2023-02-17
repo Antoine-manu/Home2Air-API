@@ -1,5 +1,7 @@
+
+
+
 exports.getHome = async (req, res, next) => {
-	console.log('controller ok');
 	try {
 		return res.status(200).json({ message: 'Tout est ok' });
 	} catch (error) {

@@ -26,10 +26,4 @@ router.post('/sensor/delete', adminCheck, sensorController.delete);
 /* POST delete sensor. */
 router.post('/sensor/delete', auth, sensorController.delete);
 
-/* POST get sensor's room. */
-// router.post('/sensor/getroom', auth, sensorController.getRoom);
-
-/* POST disable sensor. */
-// router.post('/sensor/disable', auth, sensorController.disable);
-
 module.exports = router;

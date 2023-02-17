@@ -1,4 +1,5 @@
 const express = require('express');
+
 // require('express-group-routes');
 
 const app = express();
@@ -20,7 +21,8 @@ try {
 		.use('/api/v1', require('./routes/invite'))
 		.use('/api/v1', require('./routes/tickets'))
 		.use('/api/v1', require('./routes/user'))
-		.use('/api/v1', require('./routes/auth'));
+		.use('/api/v1', require('./routes/auth'))
+		.use('/api/v1', require('./routes/probe'));
 
 	app.listen(6500, () => console.log('Server started: 6500'));
 } catch (error) {
