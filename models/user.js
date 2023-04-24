@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({Place, Roles, Company, Notifications, Tickets, Sensor, Tickets_commentaire, Invites}) {
-      console.log()
       this.belongsToMany(Place, {
         through: "user_place_list",
         foreignKey: "user_id",

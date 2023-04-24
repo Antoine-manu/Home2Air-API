@@ -14,7 +14,7 @@ exports.getHome = function _callee(req, res, next) {
           _context.prev = 4;
           _context.t0 = _context["catch"](0);
           return _context.abrupt("return", res.status(500).json({
-            message: 'nok',
+            message: 'not ok',
             data: _context.t0
           }));
 

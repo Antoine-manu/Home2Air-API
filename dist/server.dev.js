@@ -11,10 +11,12 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 try {
-  app.use('/api/v1', require('./routes/routes')).use('/api/v1', require('./routes/company')).use('/api/v1', require('./routes/notifications')).use('/api/v1', require('./routes/place')).use('/api/v1', require('./routes/roles')).use('/api/v1', require('./routes/room')).use('/api/v1', require('./routes/routes')).use('/api/v1', require('./routes/sensor')).use('/api/v1', require('./routes/invite')).use('/api/v1', require('./routes/tickets')).use('/api/v1', require('./routes/user')).use('/api/v1', require('./routes/auth')).use('/api/v1', require('./routes/probe'));
+  app.use('/', require('./routes/routes')).use('/', require('./routes/company')).use('/', require('./routes/notifications')).use('/', require('./routes/place')).use('/', require('./routes/roles')).use('/', require('./routes/room')).use('/', require('./routes/routes')).use('/', require('./routes/sensor')).use('/', require('./routes/invite')).use('/', require('./routes/tickets')).use('/', require('./routes/user')).use('/', require('./routes/auth')).use('/', require('./routes/probe'));
   app.listen(6500, function () {
     return console.log('Server started: 6500');
   });
 } catch (error) {
   console.log('error', error);
 }
+
+module.exports = app;
