@@ -73,6 +73,27 @@ exports.findBy = (req, res) => {
 	}
 };
 
+// Find room from space
+exports.findByPlace = (req, res) => {
+	const id = req.body.place;
+	const condition =  { place_id: { [Op.like]: `%${id}%` }};
+	if (condition) {
+		Room.findAll({ where: condition })
+			.then((data) => {
+				res.send(data);
+			})
+			.catch((err) => {
+				res.status(500).send({
+					message: err.message || 'Some error occurred while retrieving rooms.'
+				});
+			});
+	} else {
+		res.status(500).send({
+			message: 'No params found'
+		});
+	}
+};
+
 // Find a single Room with an id
 exports.findOneById = (req, res) => {
 	const id = req.body.id;

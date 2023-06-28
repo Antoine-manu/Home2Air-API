@@ -13,6 +13,9 @@ router.post('/room/find-all', auth, roomController.findAll);
 /* POST findOne room. */
 router.post('/room/find-by', auth, roomController.findBy);
 
+/* POST findByPlace room. */
+router.post('/room/find-by-place', auth, roomController.findByPlace);
+
 /* POST findOneById room. */
 router.post('/room/find-one-by-id', auth, roomController.findOneById);
 
