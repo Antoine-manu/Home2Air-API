@@ -22,7 +22,7 @@ try {
 		.use('/api/v1', require('./routes/user'))
 		.use('/api/v1', require('./routes/auth'));
 
-	app.listen(6500, () => console.log('Server started: 6500'));
+	app.listen(6500, "192.168.1.42",() => console.log('Server started: 6500'));
 } catch (error) {
 	console.log('error', error);
 }

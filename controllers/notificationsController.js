@@ -50,7 +50,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Notifications from the database.
 exports.findAll = (req, res) => {
-	notifications.findAll()
+	notification.findAll()
 		.then(data => {
 			res.send(data);
 		})
@@ -64,12 +64,11 @@ exports.findAll = (req, res) => {
 
 // Find Notifications with condition from database
 exports.findBy = (req, res) => {
-	const name = req.body.name;
+	const id = req.body.value;
 
-	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-	console.log(condition);
+	var condition =  { user_id: { [Op.like]: `%${id}%` } } ;
 	if (condition) {
-		Notifications.findAll({ where: condition })
+		Notification.findAll({ where: condition })
 			.then(data => {
 				res.send(data);
 			})
@@ -90,7 +89,7 @@ exports.findBy = (req, res) => {
 exports.findOneById = (req, res) => {
 	const id = req.body.id;
 
-	Notifications.findByPk(id)
+	Notification.findByPk(id)
 		.then(data => {
 			if (data) {
 				res.send(data);
@@ -112,7 +111,7 @@ exports.findOneById = (req, res) => {
 exports.update = (req, res) => {
 	const id = req.params.id;
 
-	Notifications.update(req.body, {
+	Notification.update(req.body, {
 		where: { id: id }
 	})
 		.then(num => {
@@ -137,7 +136,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
 	const id = req.body.id;
 
-	Notifications.destroy({
+	Notification.destroy({
 		where: { id: id }
 	})
 		.then(num => {

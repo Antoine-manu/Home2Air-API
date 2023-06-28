@@ -10,7 +10,7 @@ const authController = require("../controllers/authController")
 router.post('/place/invite/:id', auth, inviteController.invite);
 
 /* POST accept invites. */
-router.post('/place/accept/:id', auth, inviteController.accept);
+router.get('/place/accept/:id/:token', auth, inviteController.accept);
 
 /* POST delete invite. */
 router.post('/invite/delete', auth, inviteController.delete);

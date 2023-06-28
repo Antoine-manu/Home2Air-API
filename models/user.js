@@ -70,7 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     role_id: DataTypes.INTEGER,
     token: DataTypes.STRING,
     deleted_at: DataTypes.DATE,
-    active: DataTypes.BOOLEAN
+    active: DataTypes.BOOLEAN,
+    darkMode: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User'
