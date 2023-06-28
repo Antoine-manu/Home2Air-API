@@ -12,16 +12,16 @@ function buildDummyDatas() {
 		const date = new Date();
 		date.setMinutes(date.getMinutes() - i);
 		const obj = {
-			temperature: getRandomFloat(0, 100),
-			pressure: getRandomFloat(0, 100),
-			humidity: getRandomFloat(0, 100),
-			light: getRandomFloat(0, 100),
-			reduced: getRandomFloat(0, 100),
-			oxidised: getRandomFloat(0, 100),
-			ammoniac: getRandomFloat(0, 100),
-			particules0: getRandomFloat(0, 100),
-			particules1: getRandomFloat(0, 100),
-			particules2: getRandomFloat(0, 100),
+			temperature: getRandomFloat(0, 45),
+			pressure: getRandomFloat(0, 90),
+			humidity: getRandomFloat(0, 90),
+			light: getRandomFloat(0, 90),
+			reduced: getRandomFloat(0, 9),
+			oxidised: getRandomFloat(36, 70),
+			ammoniac: getRandomFloat(0, 10),
+			particules0: getRandomFloat(0, 95),
+			particules1: getRandomFloat(36, 45),
+			particules2: getRandomFloat(55, 150),
 			date: date.toISOString()
 		};
 		dummyData.push(obj);
@@ -37,7 +37,6 @@ exports.dataConsolidation = (req, res) => {
 		(obj) => new Date(obj.date) >= tenMinutesAgo
 	);
 
-
 	const averageData = {
 		temperature: calculateAverage('temperature', last10MinutesData),
 		pressure: calculateAverage('pressure', last10MinutesData),
@@ -50,7 +49,7 @@ exports.dataConsolidation = (req, res) => {
 		particules1: calculateAverage('particules1', last10MinutesData),
 		particules2: calculateAverage('particules2', last10MinutesData)
 	};
-	// console.log('average: ', averageData);
+	console.log('average: ', averageData);
 	// res.status(200).json(last10MinutesData);
 	res.status(200).json(averageData);
 };
@@ -58,10 +57,10 @@ exports.dataConsolidation = (req, res) => {
 function calculateAverage(property, data) {
 	let sum = 0;
 	for (let i = 0; i < data.length; i++) {
-	  sum += data[i][property];
+		sum += data[i][property];
 	}
 	return parseFloat((sum / data.length).toFixed(2));
-  }
+}
 
 exports.getStreamData = (req, res) => {
 	request.get(

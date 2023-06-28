@@ -33,8 +33,7 @@ exports.create = function (req, res) {
     city: req.body.city,
     zipcode: req.body.zipcode,
     phone: req.body.phone
-  };
-  console.log(Company); // Save Company in the database
+  }; // Save Company in the database
 
   Company.create(company).then(function (data) {
     res.send(data);
@@ -62,7 +61,6 @@ exports.findBy = function (req, res) {
   var condition = name ? {
     name: _defineProperty({}, Op.like, "%".concat(name, "%"))
   } : null;
-  console.log(condition);
 
   if (condition) {
     Company.findAll({

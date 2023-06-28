@@ -9,30 +9,11 @@ var Op = db.Sequelize.Op; // Create and Save a new Sensor
 
 exports.create = function (req, res) {
   // Validate request
+  console.log('req --- ', req);
+
   if (!req.body.name) {
     res.status(400).send({
-      message: 'La pièce doit avoir un nom'
-    });
-    return;
-  }
-
-  if (!req.body.room_id) {
-    res.status(400).send({
-      message: 'La pièce doit être attribuée à un endroit'
-    });
-    return;
-  }
-
-  if (!req.body.createdBy) {
-    res.status(400).send({
-      message: 'La pièce doit être attribuée à un endroit'
-    });
-    return;
-  }
-
-  if (!req.body.parameters) {
-    res.status(400).send({
-      message: 'La pièce doit être attribuée à un endroit'
+      message: 'Le capteur doit avoir un nom'
     });
     return;
   } // Create a Sensor
@@ -40,13 +21,17 @@ exports.create = function (req, res) {
 
   var sensor = {
     name: req.body.name,
-    deleted_at: req.body.deleted_at,
-    active: req.body.active,
+    deleted_at: null,
+    active: true,
     room_id: req.body.room_id,
-    createdBy: req.body.created_by,
-    parameters: req.body.parameters
+    createdBy: req.body.createdBy,
+    parameters: JSON.stringify({
+      notifications: true,
+      advanced: false,
+      temperature: 1
+    })
   };
-  console.log(Sensor); // Save Sensor in the database
+  console.log('sensor: ', sensor); // Save Sensor in the database
 
   Sensor.create(sensor).then(function (data) {
     res.send(data);
@@ -55,7 +40,7 @@ exports.create = function (req, res) {
       message: err.message || 'Some error occurred while creating the Sensor.'
     });
   });
-}; // Retrieve all Companies from the database.
+}; // Retrieve all sensors from the database.
 
 
 exports.findAll = function (req, res) {
@@ -63,14 +48,15 @@ exports.findAll = function (req, res) {
     res.send(data);
   })["catch"](function (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving Companiess.'
+      message: err.message || 'Some error occurred while retrieving sensorss.'
     });
   });
-}; // Find Companies with condition from database
+}; // Find sensors with condition from database
 
 
 exports.findBy = function (req, res) {
   var name = req.body.name;
+  console.log(name);
   var condition = name ? {
     name: _defineProperty({}, Op.like, "%".concat(name, "%"))
   } : null;
@@ -83,7 +69,7 @@ exports.findBy = function (req, res) {
       res.send(data);
     })["catch"](function (err) {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving tutorials.'
+        message: err.message || 'Some error occurred while retrieving sensors.'
       });
     });
   } else {
@@ -106,17 +92,17 @@ exports.findOneById = function (req, res) {
     }
   })["catch"](function (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving Companiess.' + id
+      message: err.message || 'Some error occurred while retrieving sensorss.' + id
     });
   });
 }; // Update a Sensor by the id in the request
 
 
 exports.update = function (req, res) {
-  var id = req.params.id;
+  console.log('req', req.body);
   Sensor.update(req.body, {
     where: {
-      id: id
+      id: req.params.id
     }
   }).then(function (num) {
     if (num == 1) {
@@ -125,12 +111,13 @@ exports.update = function (req, res) {
       });
     } else {
       res.send({
-        message: "Cannot update Sensor with id=".concat(id, ". Maybe Sensor was not found or req.body is empty!")
+        message: "Cannot update Sensor with id=".concat(req.params.id, ". Maybe Sensor was not found or req.body is empty!")
       });
     }
   })["catch"](function (err) {
+    console.log('err.msg:  ', err.message);
     res.status(500).send({
-      message: 'Error updating Sensor with id=' + id
+      message: 'Error updating Sensor with id=' + req.params.id
     });
   });
 }; // Delete a Sensor with the specified id in the request
@@ -154,7 +141,7 @@ exports["delete"] = function (req, res) {
     }
   })["catch"](function (err) {
     res.status(500).send({
-      message: 'Could not delete Tutorial with id=' + id
+      message: 'Could not delete sensor with id=' + id
     });
   });
 };

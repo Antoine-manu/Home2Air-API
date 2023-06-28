@@ -4,7 +4,7 @@
   "description": "Home2Air API",
   "main": "server.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1",
     "dev": "nodemon server.js"
   },
   "author": "Antoine Gaudry",

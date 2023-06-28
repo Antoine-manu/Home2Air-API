@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "User"
       });
       this.hasMany(Room, {
-        foreignKey: "id",
+        foreignKey: "place_id",
         as: "Room"
       });
       this.belongsTo(User, {

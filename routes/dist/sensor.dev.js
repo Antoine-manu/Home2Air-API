@@ -4,7 +4,7 @@ var express = require('express');
 
 var router = express.Router();
 
-var sensorController = require("../controllers/sensorController");
+var sensorController = require('../controllers/sensorController');
 
 var adminCheck = require('../middleware/adminCheck');
 
@@ -24,7 +24,7 @@ router.post('/sensor/find-by', auth, sensorController.findBy);
 router.post('/sensor/find-one-by-id', auth, sensorController.findOneById);
 /* POST update sensor. */
 
-router.post('/sensor/update', auth, sensorController.update);
+router.post('/sensor/update/:id', auth, sensorController.update);
 /* POST delete sensor. */
 
 router.post('/sensor/delete', adminCheck, sensorController["delete"]);

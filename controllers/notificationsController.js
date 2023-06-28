@@ -36,7 +36,6 @@ exports.create = (req, res) => {
 		icon_id: req.body.icon_id,
 		sound_id: req.body.sound_id
 	};
-	console.log(Notification);
 	// Save Notification in the database
 	Notification.create(notifications)
 		.then(data => {

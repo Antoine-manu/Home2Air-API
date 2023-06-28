@@ -29,7 +29,6 @@ exports.create = (req, res) => {
 		zipcode: req.body.zipcode,
 		phone: req.body.phone
 	};
-	console.log(Company);
 	// Save Company in the database
 	Company.create(company)
 		.then(data => {
@@ -62,7 +61,6 @@ exports.findBy = (req, res) => {
 	const name = req.body.name;
 
 	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-	console.log(condition);
 	if (condition) {
 		Company.findAll({ where: condition })
 			.then(data => {

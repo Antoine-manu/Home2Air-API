@@ -26,10 +26,10 @@ exports.create = (req, res) => {
 	console.log(Room);
 	// Save Room in the database
 	Room.create(room)
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: err.message || 'Some error occurred while creating the Room.'
 			});
@@ -38,33 +38,32 @@ exports.create = (req, res) => {
 
 // Retrieve all room from the database.
 exports.findAll = (req, res) => {
-	Room.findAll({include : ['Sensor']})
-		.then(data => {
+	Room.findAll({ include: ['Sensor'] })
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while retrieving rooms.'
+				message: err.message || 'Some error occurred while retrieving rooms.'
 			});
 		});
 };
 
 // Find room with condition from database
 exports.findBy = (req, res) => {
-	const name = req.body.name;
+	const key = Object.keys(req.body)[0];
+	const value = req.body[key];
 
-	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+	var condition = value ? { [key]: { [Op.like]: `%${value}%` } } : null;
 	console.log(condition);
 	if (condition) {
 		Room.findAll({ where: condition })
-			.then(data => {
+			.then((data) => {
 				res.send(data);
 			})
-			.catch(err => {
+			.catch((err) => {
 				res.status(500).send({
-					message:
-						err.message || 'Some error occurred while retrieving rooms.'
+					message: err.message || 'Some error occurred while retrieving rooms.'
 				});
 			});
 	} else {
@@ -79,7 +78,7 @@ exports.findOneById = (req, res) => {
 	const id = req.body.id;
 
 	Room.findByPk(id)
-		.then(data => {
+		.then((data) => {
 			if (data) {
 				res.send(data);
 			} else {
@@ -88,7 +87,7 @@ exports.findOneById = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
 					err.message || 'Some error occurred while retrieving rooms.' + id
@@ -103,7 +102,7 @@ exports.update = (req, res) => {
 	Room.update(req.body, {
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'Room was updated successfully.'
@@ -114,7 +113,7 @@ exports.update = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Error updating Room with id=' + id
 			});
@@ -128,7 +127,7 @@ exports.delete = (req, res) => {
 	Room.destroy({
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'Room was deleted successfully!'
@@ -139,7 +138,7 @@ exports.delete = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Could not delete room with id=' + id
 			});

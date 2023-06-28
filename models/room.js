@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "Place"
       });
       this.hasMany(Sensor, {
-        foreignKey: "id",
+        foreignKey: "room_id",
         as: "Sensor"
       });
     }

@@ -1,5 +1,8 @@
+const { where } = require('sequelize');
 const db = require('../models');
 const Place = db.Place;
+const Room = db.Room;
+const Sensor = db.Sensor;
 const UserPlaceList = db.user_place_list;
 const Op = db.Sequelize.Op;
 
@@ -16,26 +19,27 @@ exports.create = (req, res) => {
 	// Create a Place
 	const places = {
 		name: req.body.name,
-		createdBy : req.body.createdBy
+		createdBy: req.body.createdBy
 	};
 	// Save Place in the database
 	Place.create(places)
-		.then(data => {
+		.then((data) => {
 			const tableTransverse = {
-				user_id : req.body.createdBy,
-				place_id : data.id
-			}
+				user_id: req.body.createdBy,
+				place_id: data.id
+			};
 			UserPlaceList.create(tableTransverse)
-				.then(data => {
+				.then((data) => {
 					res.send(data);
 				})
-				.catch(err => {
+				.catch((err) => {
 					res.status(500).send({
-						message: err.message || 'Some error occurred while creating the PlaceList.'
+						message:
+							err.message || 'Some error occurred while creating the PlaceList.'
 					});
 				});
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: err.message || 'Some error occurred while creating the Place.'
 			});
@@ -45,15 +49,49 @@ exports.create = (req, res) => {
 // Retrieve all places from the database.
 exports.findAll = (req, res) => {
 	Place.findAll()
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while retrieving placess.'
+				message: err.message || 'Some error occurred while retrieving placess.'
 			});
 		});
+};
+
+exports.findAllRoomsAndSensorFromPlaceById = async (req, res) => {
+	try {
+		console.log(req.body)
+		const createdBy = req.body.user_id;
+		const condition = createdBy ? { createdBy: createdBy } : null;
+		const limit = req.query.limit || 10; // default to 10 if not specified
+		const offset = req.query.page ? limit * (req.query.page - 1) : 0;
+		const places = await Place.findAll({
+			where: condition,
+			include: [
+				{
+					model: Room,
+					as: 'Room',
+					include: [
+						{
+							model: Sensor,
+							as: 'Sensor',
+							where: { deleted: 0 }
+						}
+					]
+				}
+			],
+			limit,
+			offset
+		});
+
+		res.send(places);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({
+			message: 'An error occurred while retrieving places'
+		});
+	}
 };
 
 // Find places with condition from database
@@ -64,13 +102,12 @@ exports.findBy = (req, res) => {
 	console.log(condition);
 	if (condition) {
 		Place.findAll({ where: condition })
-			.then(data => {
+			.then((data) => {
 				res.send(data);
 			})
-			.catch(err => {
+			.catch((err) => {
 				res.status(500).send({
-					message:
-						err.message || 'Some error occurred while retrieving places.'
+					message: err.message || 'Some error occurred while retrieving places.'
 				});
 			});
 	} else {
@@ -85,7 +122,7 @@ exports.findOneById = (req, res) => {
 	const id = req.body.id;
 
 	Place.findByPk(id)
-		.then(data => {
+		.then((data) => {
 			if (data) {
 				res.send(data);
 			} else {
@@ -94,7 +131,7 @@ exports.findOneById = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
 					err.message || 'Some error occurred while retrieving placess.' + id
@@ -109,7 +146,7 @@ exports.update = (req, res) => {
 	Place.update(req.body, {
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'Place was updated successfully.'
@@ -120,7 +157,7 @@ exports.update = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Error updating Place with id=' + id
 			});
@@ -134,7 +171,7 @@ exports.delete = (req, res) => {
 	Place.destroy({
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'Place was deleted successfully!'
@@ -145,7 +182,7 @@ exports.delete = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Could not delete place with id=' + id
 			});
