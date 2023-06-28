@@ -14,7 +14,7 @@ router.post('/place/create', auth, placeController.create);
 /* POST findAll place. */
 
 router.post('/place/find-all', auth, placeController.findAll);
-router.post('/place/find-room-and-sensor', auth, placeController.findAllRoomsAndSensorFromPlaceById);
+router.post('/place/find-user-place', auth, placeController.findAllPlacesFromUser);
 /* POST findOne place. */
 
 router.post('/place/find-by', auth, placeController.findBy);

@@ -59,32 +59,19 @@ exports.findAll = (req, res) => {
 		});
 };
 
-exports.findAllRoomsAndSensorFromPlaceById = async (req, res) => {
+exports.findAllPlacesFromUser = async (req, res) => {
 	try {
-		console.log(req.body)
+		console.log(req.body);
 		const createdBy = req.body.user_id;
 		const condition = createdBy ? { createdBy: createdBy } : null;
 		const limit = req.query.limit || 10; // default to 10 if not specified
 		const offset = req.query.page ? limit * (req.query.page - 1) : 0;
 		const places = await Place.findAll({
 			where: condition,
-			include: [
-				{
-					model: Room,
-					as: 'Room',
-					include: [
-						{
-							model: Sensor,
-							as: 'Sensor',
-							where: { deleted: 0 }
-						}
-					]
-				}
-			],
 			limit,
 			offset
 		});
-
+		console.log(places);
 		res.send(places);
 	} catch (error) {
 		console.error(error);

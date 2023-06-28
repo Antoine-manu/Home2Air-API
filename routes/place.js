@@ -10,9 +10,9 @@ router.post('/place/create', auth, placeController.create);
 router.post('/place/find-all', auth, placeController.findAll);
 
 router.post(
-	'/place/find-room-and-sensor',
+	'/place/find-user-place',
 	auth,
-	placeController.findAllRoomsAndSensorFromPlaceById
+	placeController.findAllPlacesFromUser
 );
 
 /* POST findOne place. */
