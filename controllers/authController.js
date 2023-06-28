@@ -3,7 +3,7 @@ const User = db.User;
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const tokenKey = 'k9zo6QGCjIWzpJ1H82yQ'
+const tokenKey = 'k9zo6QGCjIWzpJ1H82yQ';
 /* Log user */
 exports.login = (req, res) => {
 	const token = req.body.token

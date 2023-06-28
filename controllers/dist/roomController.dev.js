@@ -37,25 +37,26 @@ exports.create = function (req, res) {
       message: err.message || 'Some error occurred while creating the Room.'
     });
   });
-}; // Retrieve all Companies from the database.
+}; // Retrieve all room from the database.
 
 
 exports.findAll = function (req, res) {
-  Room.findAll().then(function (data) {
+  Room.findAll({
+    include: ['Sensor']
+  }).then(function (data) {
     res.send(data);
   })["catch"](function (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving Companiess.'
+      message: err.message || 'Some error occurred while retrieving rooms.'
     });
   });
-}; // Find Companies with condition from database
+}; // Find room with condition from database
 
 
 exports.findBy = function (req, res) {
-  var name = req.body.name;
-  var condition = name ? {
-    name: _defineProperty({}, Op.like, "%".concat(name, "%"))
-  } : null;
+  var key = Object.keys(req.body)[0];
+  var value = req.body[key];
+  var condition = value ? _defineProperty({}, key, _defineProperty({}, Op.like, "%".concat(value, "%"))) : null;
   console.log(condition);
 
   if (condition) {
@@ -65,7 +66,7 @@ exports.findBy = function (req, res) {
       res.send(data);
     })["catch"](function (err) {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving tutorials.'
+        message: err.message || 'Some error occurred while retrieving rooms.'
       });
     });
   } else {
@@ -88,7 +89,7 @@ exports.findOneById = function (req, res) {
     }
   })["catch"](function (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving Companiess.' + id
+      message: err.message || 'Some error occurred while retrieving rooms.' + id
     });
   });
 }; // Update a Room by the id in the request
@@ -136,7 +137,7 @@ exports["delete"] = function (req, res) {
     }
   })["catch"](function (err) {
     res.status(500).send({
-      message: 'Could not delete Tutorial with id=' + id
+      message: 'Could not delete room with id=' + id
     });
   });
 };

@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request');
-const probeController = require('../controllers/probeController');
-const adminCheck = require('../middleware/adminCheck');
-const auth = require('../middleware/auth');
+const probeController = require('../controllers/probeController')
 
-router.get('/probe', auth, probeController.getStreamData);
+router.post('/probe', probeController.dataConsolidation);
 
 module.exports = router;
