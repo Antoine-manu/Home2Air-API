@@ -12,7 +12,8 @@ npx sequelize model:generate --name Place --attributes name:string
 npx sequelize model:generate --name Invites --attributes userTo:integer,userFrom:integer,isAccpected:boolean
 
 npx sequelize model:generate --name Notifications_sound --attributes name:string
-npx sequelize model:generate --name Notifications_icon --attributes name:string
+npx sequelize model:generate --name Notifications_icon --attributes name:string  
+npx sequelize model:generate --name Notifications_config --attributes title:string,data:string,percent:integer,sound_id:integer,icon_id:integer,type:integer,message:text,user_id:integer
 npx sequelize model:generate --name User --attributes username:string,first_name:string,last_name:string,email:string,role_id:integer,token:string,created_at:date,deleted_at:date,active:boolean,user_place_list_id:integer
 
 

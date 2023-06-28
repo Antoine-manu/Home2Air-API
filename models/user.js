@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Place, Roles, Company, Notifications, Tickets, Sensor, Tickets_commentaire, Invites}) {
+    static associate({Place, Roles, Company, Notifications, Tickets, Sensor, Tickets_commentaire, Invites, Notifications_config}) {
       this.belongsToMany(Place, {
         through: "user_place_list",
         foreignKey: "user_id",
@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         as: "Notifications"
       });
+      this.hasMany(Notifications_config, {
+        foreignKey: "user_id",
+        as: "NotificationsConfigs"
+      });
       this.hasMany(Tickets, {
         foreignKey: "createdBy",
         as: "Tickets"
@@ -65,7 +69,8 @@ module.exports = (sequelize, DataTypes) => {
     role_id: DataTypes.INTEGER,
     token: DataTypes.STRING,
     deleted_at: DataTypes.DATE,
-    active: DataTypes.BOOLEAN
+    active: DataTypes.BOOLEAN,
+    darkMode: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User'

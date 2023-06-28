@@ -9,10 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Notifications}) {
+    static associate({Notifications, Notifications_config}) {
       this.hasMany(Notifications, {
         foreignKey: "sound_id",
         as: "NotificationSound"
+      });
+      this.hasMany(Notifications_config, {
+        foreignKey: "sound_id",
+        as: "NotificationsConfig"
       });
     }
   }

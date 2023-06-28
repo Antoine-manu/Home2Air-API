@@ -106,6 +106,7 @@ exports.findBy = (req, res) => {
 // Find a single User with an id
 exports.findOneById = (req, res) => {
 	const id = req.body.id;
+	console.log(id)
 
 	User.findByPk(id)
 		.then(data => {

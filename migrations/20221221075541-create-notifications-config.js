@@ -2,35 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Notifications', {
+    await queryInterface.createTable('Notifications_configs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: 'id'
-        }
-      },
-      custom: {
-        type: Sequelize.BOOLEAN
-      },
-      read: {
-        type: Sequelize.BOOLEAN
-      },
-      type: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_types",
-          key: 'id'
-        }
-      },
       title: {
         type: Sequelize.STRING
+      },
+      data: {
+        type: Sequelize.STRING
+      },
+      percent: {
+        type: Sequelize.INTEGER
       },
       sound_id: {
         type: Sequelize.INTEGER,
@@ -46,11 +32,22 @@ module.exports = {
           key: 'id'
         }
       },
-      message: {
-        type: Sequelize.STRING,
+      type: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Notifications_types",
+          key: 'id'
+        }
       },
-      date: {
-        type: Sequelize.DATE
+      message: {
+        type: Sequelize.TEXT
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -63,6 +60,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Notifications');
+    await queryInterface.dropTable('Notifications_configs');
   }
 };

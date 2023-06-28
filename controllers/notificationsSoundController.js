@@ -1,5 +1,5 @@
 const db = require('../models');
-const NotificationSnd = db.NotificationS_sound;
+const NotificationSnd = db.Notifications_sound;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new NotificationSnd

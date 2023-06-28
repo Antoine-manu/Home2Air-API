@@ -49,6 +49,11 @@ module.exports = {
       deleted_at: {
         allowNull: true,
         type: Sequelize.DATE
+      },
+      darkMode: {
+        allowNull: true,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
       }
     });
   },
