@@ -24,7 +24,7 @@ try {
 		.use('/api/v1/', require('./routes/auth'))
 		.use('/api/v1/', require('./routes/probe'));
 
-	app.listen(6500, "192.168.1.42",() => console.log('Server started: 6500'));
+	app.listen(6500, "192.168.1.52",() => console.log('Server started: 6500'));
 } catch (error) {
 	console.log('error', error);
 }
