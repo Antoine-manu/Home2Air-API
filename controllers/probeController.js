@@ -251,18 +251,23 @@ function calculateAqiOfHour(groupedByHour) {
 exports.dataConsolidation = (req, res) => {
   const now = new Date();
   let hourlyAqi = [];
-  this.getStreamData().then(stream => {
-    stream = stream.map(cloneEntry).map(convertDate);
-    let groupedByDate = stream.reduce(groupByDate, {});
-    let groupedByHour = stream.reduce(groupByHour, {});
-    for (let hour in groupedByHour) {
-      hourlyAqi.push({
-        date: hour,
-        aqi: parseFloat(calculateAqiOfHour(groupedByHour[hour])).toFixed(2)
-      });
+  this.getStreamData(req.body.address).then(stream => {
+    if (stream) {
+      stream = stream.map(cloneEntry).map(convertDate);
+      let groupedByDate = stream.reduce(groupByDate, {});
+      let groupedByHour = stream.reduce(groupByHour, {});
+      for (let hour in groupedByHour) {
+        hourlyAqi.push({
+          date: hour,
+          aqi: parseFloat(calculateAqiOfHour(groupedByHour[hour])).toFixed(2)
+        });
+      }
+      console.log(hourlyAqi, calculateAverageAqi(groupDataByDate(hourlyAqi)));
+      res.json([
+        calculateAverageAqi(groupDataByDate(hourlyAqi)),
+        stream[stream.length - 1]
+      ]);
     }
-    console.log(hourlyAqi, calculateAverageAqi(groupDataByDate(hourlyAqi)));
-    res.json([hourlyAqi, calculateAverageAqi(groupDataByDate(hourlyAqi))]);
   });
 };
 
@@ -270,10 +275,12 @@ function aqiFormula(concentration, Ilow, Ihigh, Clow, Chigh) {
   return (Ihigh - Ilow) / (Chigh - Clow) * (concentration - Clow) + Ilow;
 }
 
-exports.getStreamData = async () => {
+exports.getStreamData = async url => {
   try {
-    const response = await axios.get("http://192.168.1.83:5000/datas");
-    return response.data;
+    const response = await axios.get(`http://${url}/datas`);
+    if (response) {
+      return response.data;
+    }
   } catch (error) {
     console.error(error);
   }
