@@ -78,7 +78,7 @@ exports.findAllRoomsAndSensorFromPlaceById = async (req, res) => {
             {
               model: Sensor,
               as: "Sensor",
-              where: { deleted: 0 }
+              where: { deleted_at: 0 }
             }
           ]
         }

@@ -23,14 +23,13 @@ module.exports = (sequelize, DataTypes) => {
   Sensor.init(
     {
       name: DataTypes.STRING,
-      deleted_at: DataTypes.INTEGER,
+      deleted_at: DataTypes.BOOLEAN,
       reference: DataTypes.STRING,
       address: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
       room_id: DataTypes.INTEGER,
       createdBy: DataTypes.INTEGER,
-      parameters: DataTypes.TEXT,
-      deleted: DataTypes.BOOLEAN
+      parameters: DataTypes.TEXT
     },
     {
       sequelize,

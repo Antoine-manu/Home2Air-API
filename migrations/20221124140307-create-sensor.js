@@ -14,8 +14,15 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      reference: {
+        type: Sequelize.STRING
+      },
+      address: {
+        type: Sequelize.STRING
+      },
       deleted_at: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN,
+        default: 0
       },
       active: {
         type: Sequelize.BOOLEAN
