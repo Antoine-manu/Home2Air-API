@@ -61,8 +61,10 @@ exports.findBy = (req, res) => {
 	const key = Object.keys(req.body)[0];
 	const value = req.body[key];
 
-	var condition = value ? { [key]: { [Op.like]: `%${value}%` } } : null;
-	console.log(condition);
+	var condition = value
+		? { [key]: { [Op.like]: `%${value.value ? value.value : value}%` } }
+		: null;
+	console.log(condition, value);
 	if (condition) {
 		Room.findAll({
 			where: condition,

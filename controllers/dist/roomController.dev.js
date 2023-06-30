@@ -56,8 +56,8 @@ exports.findAll = function (req, res) {
 exports.findBy = function (req, res) {
   var key = Object.keys(req.body)[0];
   var value = req.body[key];
-  var condition = value ? _defineProperty({}, key, _defineProperty({}, Op.like, "%".concat(value, "%"))) : null;
-  console.log(condition);
+  var condition = value ? _defineProperty({}, key, _defineProperty({}, Op.like, "%".concat(value.value ? value.value : value, "%"))) : null;
+  console.log(condition, value);
 
   if (condition) {
     Room.findAll({
