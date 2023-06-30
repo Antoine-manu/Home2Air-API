@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Place.init({
     name: DataTypes.STRING,
-    createdBy: DataTypes.INTEGER
+    createdBy: DataTypes.INTEGER,
+    deletedAt: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'Place',

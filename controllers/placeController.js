@@ -48,7 +48,9 @@ exports.create = (req, res) => {
 
 // Retrieve all places from the database.
 exports.findAll = (req, res) => {
-	Place.findAll()
+	Place.findAll({
+		where : {deletedAt : null}
+	})
 		.then((data) => {
 			res.send(data);
 		})
@@ -139,6 +141,39 @@ exports.findOneById = (req, res) => {
 		});
 };
 
+//Give place from user
+exports.findAllPlacesFromUser = async (req, res) => {
+	try {
+		const user_id = req.body.user_id;
+		const condition = { deletedAt : null };
+		const limit = req.query.limit || 10; // default to 10 if not specified
+		const offset = req.query.page ? limit * (req.query.page - 1) : 0;
+		const places = await Place.findAll({
+			where: {[Op.and] : condition},
+			include: [
+				{
+					association: "Room",
+					where : { deletedAt : {[Op.is]: null}},
+					required: false,
+				},
+				{
+					association: "User",
+					where : { id : user_id}
+				},
+			],
+			limit,
+			offset
+		});
+		res.send(places);
+		console.log("PLACES :" , places)
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({
+			message: 'An error occurred while retrieving places'
+		});
+	}
+};
+
 // Update a Place by the id in the request
 exports.update = (req, res) => {
 	const id = req.params.id;
@@ -166,9 +201,9 @@ exports.update = (req, res) => {
 
 // Delete a Place with the specified id in the request
 exports.delete = (req, res) => {
-	const id = req.body.id;
+	const id = req.params.id;
 
-	Place.destroy({
+	Place.update(req.body, {
 		where: { id: id }
 	})
 		.then((num) => {

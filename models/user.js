@@ -27,11 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "Place_created"
       });
       this.hasMany(Invites, {
-        foreignKey: "userFrom",
+        foreignKey: "userTo",
         as: "InvitesRecieved"
       });
       this.hasMany(Invites, {
-        foreignKey: "userTo",
+        foreignKey: "userFrom",
         as: "InvitesSent"
       });
       this.belongsTo(Company, {

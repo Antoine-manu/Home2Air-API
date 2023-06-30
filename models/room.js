@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Room.init({
     name: DataTypes.STRING,
+    deletedAt: DataTypes.DATE,
     place_id: DataTypes.INTEGER
   }, {
     sequelize,

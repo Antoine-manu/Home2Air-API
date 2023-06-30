@@ -14,6 +14,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
       place_id: {
         type: Sequelize.INTEGER,
         references: {

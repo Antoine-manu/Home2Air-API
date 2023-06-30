@@ -1,7 +1,9 @@
 const db = require('../models/index.js');
 const User = db['User']
+const Invite = db['Invite']
 // const User = db.User
 const Op = db.Sequelize.Op;
+const { literal } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -82,11 +84,23 @@ exports.findAll = (req, res) => {
 // Find Users with condition from database
 exports.findBy = (req, res) => {
 	const name = req.body.name;
+	const place_id = req.body.place_id;
 
-	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-	console.log(condition);
+	var condition =  { first_name: { [Op.like]: `%${name}%` } , last_name: { [Op.like]: `%${name}%` }, email: { [Op.like]: `%${name}%` } }
+	console.log("CONDITION : ",name);
 	if (condition) {
-		User.findAll({ where: condition })
+		User.findAll({
+			where: {[Op.or]: condition},
+			include: [
+				{
+					association: 'InvitesRecieved',
+					where : {
+						place_id : place_id
+					},
+					required : false
+				},
+			],
+		})
 			.then(data => {
 				res.send(data);
 			})
@@ -125,6 +139,21 @@ exports.findOneById = (req, res) => {
 			});
 		});
 };
+
+function getMostRecentObject(objects) {
+	let mostRecentObject = null;
+	let mostRecentUpdatedAt = null;
+
+	objects.forEach(obj => {
+		const updatedAt = new Date(obj.updatedAt);
+		if (!mostRecentObject || updatedAt > mostRecentUpdatedAt) {
+			mostRecentObject = obj;
+			mostRecentUpdatedAt = updatedAt;
+		}
+	});
+
+	return mostRecentObject;
+}
 
 // Update a User by the id in the request
 exports.update = (req, res) => {

@@ -38,7 +38,14 @@ exports.create = (req, res) => {
 
 // Retrieve all room from the database.
 exports.findAll = (req, res) => {
-	Room.findAll({ include: ['Sensor'] })
+	Room.findAll({
+		include: {
+			association: "Sensor",
+			where : { deleted_at : {[Op.is]: null}},
+			required: false,
+		},
+		where : {deletedAt : null}
+	})
 		.then((data) => {
 			res.send(data);
 		})
@@ -57,7 +64,14 @@ exports.findBy = (req, res) => {
 	var condition = value ? { [key]: { [Op.like]: `%${value}%` } } : null;
 	console.log(condition);
 	if (condition) {
-		Room.findAll({ where: condition })
+		Room.findAll({
+			where: condition,
+			include: {
+				association: "Sensor",
+				where : { deleted_at : {[Op.is]: null}},
+				required: false,
+			},
+		})
 			.then((data) => {
 				res.send(data);
 			})
@@ -76,9 +90,14 @@ exports.findBy = (req, res) => {
 // Find room from space
 exports.findByPlace = (req, res) => {
 	const id = req.body.place;
-	const condition =  { place_id: { [Op.like]: `%${id}%` }};
+	const condition =  { place_id: { [Op.like]: `${id}` }, deletedAt : null};
 	if (condition) {
-		Room.findAll({ where: condition })
+		Room.findAll({ where: {[Op.and] : condition},
+			include: {
+				association: "Sensor",
+				where : { deleted_at : {[Op.is]: null}},
+				required: false,
+			}, })
 			.then((data) => {
 				res.send(data);
 			})

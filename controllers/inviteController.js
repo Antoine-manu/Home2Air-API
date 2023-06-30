@@ -1,6 +1,7 @@
 const db = require('../models');
 const Invite = db.Invites;
 const User = db.User;
+const Place = db.Place;
 const UserPlaceList = db.user_place_list;
 const sendMail = require('../services/mailer.js');
 const jwt = require("jsonwebtoken");
@@ -8,28 +9,29 @@ const tokenKey = 'k9zo6QGCjIWzpJ1H82yQ'
 
 //Invite someone to his place
 exports.invite = (req, res) => {
-	const idToInvite = parseInt(req.params.id);
-	const id = req.body.user_id
+	const idToInvite = parseInt(req.body.userTo_id);
+	const place_id = req.body.place_id
+    const userID = req.body.user_id
 
     let userFrom = null
     let userTo = null
     let place = null
-    User.findByPk(id).then(uf => {
+    User.findByPk(userID).then(uf => {
         userFrom = uf;
     })
     User.findByPk(idToInvite).then(ut => {
         userTo = ut;
     })
-    Place.findByPk(req.body.place_id).then(s => {
+    Place.findByPk(place_id).then(s => {
         place = s;
     })
     const token = jwt.sign(
-        {id},
+        {userID},
         tokenKey,
         { expiresIn: '24h' }
     )
 	const invite = {
-        userFrom : id,
+        userFrom : userID,
         userTo : idToInvite,
         place_id : req.body.place_id
     }
@@ -127,6 +129,22 @@ exports.delete = (req, res) => {
 // Retrieve all Invites from the database.
 exports.findAll = (req, res) => {
 	Invite.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Invites.'
+			});
+		});
+};
+
+// Retrieve all Invites from the database.
+exports.findByUser = (req, res) => {
+    const id = req.body.id;
+    const condition = { place_id: id };
+	Invite.findAll({where: condition})
 		.then(data => {
 			res.send(data);
 		})
