@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const notificationsController = require("../controllers/notificationsController.js")
 const notificationsConfigController = require("../controllers/notificationsConfigController.js")
-const notificationsIconsController = require("../controllers/notificationsIconsController.js")
-const notificationsSoundsController = require("../controllers/notificationsSoundController.js")
-const notificationsTypesController = require("../controllers/notificationsTypesController.js")
 const notificationsMessagesController = require("../controllers/notificationsMessagesController.js")
 const auth = require('../middleware/auth');
 
@@ -13,6 +10,12 @@ router.post('/notifications/create', auth, notificationsController.create);
 
 /* POST findAll notifications. */
 router.post('/notifications/find-all', auth, notificationsController.findAll);
+
+/* POST notifications passed. */
+router.post('/notifications/find-passed', auth, notificationsController.findPassed);
+
+/* POST notifications passed. */
+router.post('/notifications/find-recent', auth, notificationsController.findRecent);
 
 /* POST findOne notifications. */
 router.post('/notifications/find-by', auth, notificationsController.findBy);
@@ -45,67 +48,6 @@ router.post('/notifications-config/update/:id', auth, notificationsConfigControl
 
 /* POST delete notifications config. */
 router.post('/notifications-config/delete', auth, notificationsConfigController.delete);
-
-
-
-/* POST create notifications Icon. */
-router.post('/notifications-icons/create', auth, notificationsIconsController.create);
-
-/* POST findAll notifications Icon. */
-router.post('/notifications-icons/find-all', auth, notificationsIconsController.findAll);
-
-/* POST findOne notifications Icon. */
-router.post('/notifications-icons/find-by', auth, notificationsIconsController.findBy);
-
-/* POST findOneById notifications Icon. */
-router.post('/notifications-icons/find-one-by-id', auth, notificationsIconsController.findOneById);
-
-/* POST update notifications Icon. */
-router.post('/notifications-icons/update/:id', auth, notificationsIconsController.update);
-
-/* POST delete notifications Icon. */
-router.post('/notifications-icons/delete', auth, notificationsIconsController.delete);
-
-
-
-/* POST create notifications sound. */
-router.post('/notifications-sounds/create', auth, notificationsSoundsController.create);
-
-/* POST findAll notifications sound. */
-router.post('/notifications-sounds/find-all', auth, notificationsSoundsController.findAll);
-
-/* POST findOne notifications sound. */
-router.post('/notifications-sounds/find-by', auth, notificationsSoundsController.findBy);
-
-/* POST findOneById notifications sound. */
-router.post('/notifications-sounds/find-one-by-id', auth, notificationsSoundsController.findOneById);
-
-/* POST update notifications sound. */
-router.post('/notifications-sounds/update/:id', auth, notificationsSoundsController.update);
-
-/* POST delete notifications sound. */
-router.post('/notifications-sounds/delete', auth, notificationsSoundsController.delete);
-
-
-
-/* POST create notifications type. */
-router.post('/notifications-types/create', auth, notificationsTypesController.create);
-
-/* POST findAll notifications type. */
-router.post('/notifications-types/find-all', auth, notificationsTypesController.findAll);
-
-/* POST findOne notifications type. */
-router.post('/notifications-types/find-by', auth, notificationsTypesController.findBy);
-
-/* POST findOneById notifications type. */
-router.post('/notifications-types/find-one-by-id', auth, notificationsTypesController.findOneById);
-
-/* POST update notifications type. */
-router.post('/notifications-types/update/:id', auth, notificationsTypesController.update);
-
-/* POST delete notifications type. */
-router.post('/notifications-types/delete', auth, notificationsTypesController.delete);
-
 
 
 /* POST create notifications message. */

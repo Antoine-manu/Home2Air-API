@@ -18,27 +18,6 @@ module.exports = {
       percent: {
         type: Sequelize.INTEGER
       },
-      sound_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_sounds",
-          key: 'id'
-        }
-      },
-      icon_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_icons",
-          key: 'id'
-        }
-      },
-      type: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_types",
-          key: 'id'
-        }
-      },
       message: {
         type: Sequelize.TEXT
       },

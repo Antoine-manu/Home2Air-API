@@ -23,7 +23,7 @@ exports.create = (req, res) => {
 		parameters: JSON.stringify({
 			notifications: true,
 			advanced: false,
-			temperature: 1
+			temperature: "Celsius"
 		})
 	};
 	console.log('sensor: ', sensor);

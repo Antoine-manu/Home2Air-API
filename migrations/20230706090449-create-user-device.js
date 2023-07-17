@@ -2,14 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Notifications_icons', {
+    await queryInterface.createTable('User_Devices', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      user_id: {
+        type: Sequelize.INTEGER
+      },
+      device: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -23,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Notifications_icons');
+    await queryInterface.dropTable('User_Devices');
   }
 };
