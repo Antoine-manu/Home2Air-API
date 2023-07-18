@@ -2,6 +2,26 @@ const db = require('../models');
 const Sensor = db.Sensor;
 const Op = db.Sequelize.Op;
 
+function referenceBuilder() {
+	let reference = '';
+	let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	for (let i = 0; i < 10; i++) {
+		let selected = '';
+		for (let j = 0; j < 27; j++) {
+			if (i == 7) {
+				selected = '-';
+			} else if (i > 7) {
+				selected = `${Math.floor(Math.random() * 10)}`;
+			} else {
+				selected = chars.charAt(Math.floor(Math.random() * chars.length));
+			}
+		}
+		reference += selected;
+	}
+	console.log('reference', reference);
+	return reference;
+}
+
 // Create and Save a new Sensor
 exports.create = (req, res) => {
 	// Validate request
@@ -15,15 +35,16 @@ exports.create = (req, res) => {
 	// Create a Sensor
 	const sensor = {
 		name: req.body.name,
+		reference: referenceBuilder(),
 		deleted_at: null,
 		active: true,
 		room_id: req.body.room_id,
 		createdBy: req.body.createdBy,
-		address : "192.168.1.83:5000",
+		address: '192.168.1.83:5000',
 		parameters: JSON.stringify({
 			notifications: true,
 			advanced: false,
-			temperature: "Celsius"
+			temperature: 'Celsius'
 		})
 	};
 	console.log('sensor: ', sensor);

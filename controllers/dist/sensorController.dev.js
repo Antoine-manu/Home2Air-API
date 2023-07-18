@@ -5,7 +5,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var db = require('../models');
 
 var Sensor = db.Sensor;
-var Op = db.Sequelize.Op; // Create and Save a new Sensor
+var Op = db.Sequelize.Op;
+
+function referenceBuilder() {
+  var reference = '';
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  for (var i = 0; i < 10; i++) {
+    var selected = '';
+
+    for (var j = 0; j < 27; j++) {
+      if (i == 7) {
+        selected = '-';
+      } else if (i > 7) {
+        selected = "".concat(Math.floor(Math.random() * 10));
+      } else {
+        selected = chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+    }
+
+    reference += selected;
+  }
+
+  console.log('reference', reference);
+  return reference;
+} // Create and Save a new Sensor
+
 
 exports.create = function (req, res) {
   // Validate request
@@ -21,15 +46,16 @@ exports.create = function (req, res) {
 
   var sensor = {
     name: req.body.name,
+    reference: referenceBuilder(),
     deleted_at: null,
     active: true,
     room_id: req.body.room_id,
     createdBy: req.body.createdBy,
-    address: "192.168.1.83:5000",
+    address: '192.168.1.83:5000',
     parameters: JSON.stringify({
       notifications: true,
       advanced: false,
-      temperature: 1
+      temperature: 'Celsius'
     })
   };
   console.log('sensor: ', sensor); // Save Sensor in the database
