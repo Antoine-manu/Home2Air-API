@@ -20,12 +20,9 @@ exports.create = (req, res) => {
 			user_id: data.user_id,
 			custom: data.custom,
 			read: false,
-			type: data.type,
 			title: data.title,
 			date: data.date,
 			message: data.message,
-			icon_id: data.icon_id,
-			sound_id: data.sound_id
 		};
 		console.log(Notification);
 		// Save Notification in the database
@@ -50,7 +47,39 @@ exports.create = (req, res) => {
 
 // Retrieve all Notifications from the database.
 exports.findAll = (req, res) => {
-	notification.findAll()
+	Notification.findAll()
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Notifications.'
+			});
+		});
+};
+
+// Retrieve all Notifications from the database.
+exports.findPassed = (req, res) => {
+	const user_id = req.body.user_id;
+	const condition = {user_id : user_id, read : 1}
+	Notification.findAll({where : {[Op.and] : condition}})
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Notifications.'
+			});
+		});
+};
+
+// Retrieve all Notifications from the database.
+exports.findRecent = (req, res) => {
+	const user_id = req.body.user_id;
+	const condition = {user_id : user_id, read : 0}
+	Notification.findAll({where : {[Op.and] : condition}})
 		.then(data => {
 			res.send(data);
 		})

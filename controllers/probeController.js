@@ -38,6 +38,24 @@ const Ranges = {
   }
 };
 
+const messages = [
+  "low" = [
+    "La qualité de l'air intérieur est dangereuse. Il est recommandé d'ouvrir les fenêtres, de vérifier les sources potentielles de pollution et de contacter un professionnel si nécessaire.",
+    "L'indice de qualité de l'air est très élevé à l'intérieur. Évitez l'exposition prolongée et assurez-vous d'aérer votre espace pour réduire les niveaux de pollution.",
+    "L'air à l'intérieur est fortement pollué et peut avoir un impact négatif sur la santé. Essayez de trouver la source de pollution et de la résoudre dès que possible."
+  ],
+  "medium" = [
+    "La qualité de l'air intérieur est moyenne. Pensez à ouvrir les fenêtres régulièrement pour favoriser une meilleure circulation de l'air.",
+    "L'indice de qualité de l'air indique un niveau modéré. Assurez-vous de nettoyer régulièrement les filtres de vos systèmes de ventilation pour améliorer la qualité de l'air.",
+    "L'air intérieur contient quelques particules. Évitez l'utilisation excessive de produits chimiques et maintenez une ventilation adéquate pour un environnement plus sain."
+  ],
+  "good" = [
+    "La qualité de l'air intérieur est bonne. Vous pouvez profiter d'un environnement sain et respirer facilement !",
+    "L'air à l'intérieur est frais et propre. Continuez à maintenir de bonnes pratiques d'aération pour une atmosphère agréable.",
+    "Votre espace est bien ventilé et l'air est de bonne qualité. Profitez de votre journée avec une respiration aisée !"
+  ],
+]
+
 // Generate random float values between 0 and 100
 function getRandomFloat(min, max) {
   return parseFloat((Math.random() * (max - min) + min).toFixed(2));

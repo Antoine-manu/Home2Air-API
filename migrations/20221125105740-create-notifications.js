@@ -22,29 +22,8 @@ module.exports = {
       read: {
         type: Sequelize.BOOLEAN
       },
-      type: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_types",
-          key: 'id'
-        }
-      },
       title: {
         type: Sequelize.STRING
-      },
-      sound_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_sounds",
-          key: 'id'
-        }
-      },
-      icon_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Notifications_icons",
-          key: 'id'
-        }
       },
       message: {
         type: Sequelize.STRING,
