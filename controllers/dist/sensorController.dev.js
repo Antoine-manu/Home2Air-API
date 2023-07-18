@@ -25,6 +25,7 @@ exports.create = function (req, res) {
     active: true,
     room_id: req.body.room_id,
     createdBy: req.body.createdBy,
+    address: "192.168.1.83:5000",
     parameters: JSON.stringify({
       notifications: true,
       advanced: false,
