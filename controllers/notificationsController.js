@@ -15,7 +15,6 @@ exports.create = (req, res) => {
 	NotificationsConfig.findByPk(req.body.config)
 	.then(data => {
 		// Create a Notification
-		console.log(data)
 		const notifications = {
 			user_id: data.user_id,
 			custom: data.custom,
@@ -24,7 +23,6 @@ exports.create = (req, res) => {
 			date: data.date,
 			message: data.message,
 		};
-		console.log(Notification);
 		// Save Notification in the database
 		Notification.create(notifications)
 			.then(data => {

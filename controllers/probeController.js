@@ -62,28 +62,28 @@ function getRandomFloat(min, max) {
 }
 
 // Generate dummy data for the object
-function buildDummyDatas() {
-	const dummyData = [];
-	for (let i = 0; i < 10; i++) {
-		const date = new Date();
-		date.setMinutes(date.getMinutes() - i);
-		const obj = {
-			temperature: getRandomFloat(0, 45),
-			pressure: getRandomFloat(0, 90),
-			humidity: getRandomFloat(0, 90),
-			light: getRandomFloat(0, 90),
-			reduced: getRandomFloat(0, 9),
-			oxidised: getRandomFloat(36, 70),
-			ammoniac: getRandomFloat(0, 10),
-			particules0: getRandomFloat(0, 95),
-			particules1: getRandomFloat(36, 45),
-			particules2: getRandomFloat(55, 150),
-			date: date.toISOString()
-		};
-		dummyData.push(obj);
-	}
-	return dummyData;
-}
+// function buildDummyDatas() {
+//   const dummyData = [];
+//   for (let i = 0; i < 10; i++) {
+//     const date = new Date();
+//     date.setMinutes(date.getMinutes() - i);
+//     const obj = {
+//       temperature: getRandomFloat(0, 45),
+//       pressure: getRandomFloat(0, 90),
+//       humidity: getRandomFloat(0, 90),
+//       light: getRandomFloat(0, 90),
+//       reduced: getRandomFloat(0, 9),
+//       oxidised: getRandomFloat(36, 70),
+//       ammoniac: getRandomFloat(0, 10),
+//       particules0: getRandomFloat(0, 95),
+//       particules1: getRandomFloat(36, 45),
+//       particules2: getRandomFloat(55, 150),
+//       date: date.toISOString()
+//     };
+//     dummyData.push(obj);
+//   }
+//   return dummyData;
+// }
 
 function timestampToStr(dateInSeconds) {
 	const date = new Date(dateInSeconds * 1000);
@@ -97,46 +97,62 @@ function timestampToStr(dateInSeconds) {
 }
 
 function cloneEntry(entry) {
-	return [...entry];
+	return Array.isArray(entry) ? [...entry] : { ...entry };
 }
 
 function convertDate(entry) {
-	entry[1].date = timestampToStr(entry[1].date);
+	if (entry instanceof Array) {
+		entry[1].date = timestampToStr(entry[1].date);
+	} else {
+		entry.date = timestampToStr(entry.date);
+	}
 	return entry;
 }
 
 function groupByDate(groups, entry) {
-	const date = entry[1].date.split(' ')[0];
-	if (!groups[date]) {
-		groups[date] = [];
+	if (entry instanceof Array) {
+		const date = entry[1].date.split(' ')[0];
+		if (!groups[date]) {
+			groups[date] = [];
+		}
+		groups[date].push(entry);
+		return groups;
+	} else {
+		const date = entry.date.split(' ')[0];
+		if (!groups[date]) {
+			groups[date] = [];
+		}
+		groups[date].push(entry);
+		return groups;
 	}
-	groups[date].push(entry);
-	return groups;
 }
 
 function groupByHour(groups, entry) {
-	const date = entry[1].date.split(':')[0];
-	if (!groups[date]) {
-		groups[date] = [];
-	}
-	groups[date].push(entry);
-	return groups;
-}
-
-function displayEntriesByDate(groupedByDate) {
-	for (let date in groupedByDate) {
-		console.log(`${date}: ${groupedByDate[date].length} entrée(s)`);
-	}
-}
-
-function displayEntriesByHour(groupedByHour) {
-	for (let hour in groupedByHour) {
-		console.log(`${hour}h: ${groupedByHour[hour].length} entrée(s)`);
+	if (entry instanceof Array) {
+		const date = entry[1].date.split(':')[0];
+		if (!groups[date]) {
+			groups[date] = [];
+		}
+		groups[date].push(entry);
+		return groups;
+	} else {
+		const date = entry.date.split(':')[0];
+		if (!groups[date]) {
+			groups[date] = [];
+		}
+		groups[date].push(entry);
+		return groups;
 	}
 }
 
 function extractValues(groupedByHour, pollutant) {
-	return groupedByHour.map((entry) => parseFloat(entry[1][pollutant]));
+	const entries = [];
+	groupedByHour.map((entry) => {
+		entry instanceof Array
+			? entries.push(parseFloat(entry[1][pollutant]))
+			: entries.push(parseFloat(entry[pollutant]));
+	});
+	return entries;
 }
 
 function calculateAverage(values) {
@@ -145,7 +161,6 @@ function calculateAverage(values) {
 
 function groupDataByDate(hourlyAqi) {
 	const groupedData = {};
-
 	// Split the data into days
 	for (const data of hourlyAqi) {
 		const [date] = data.date.split(' ');
@@ -174,7 +189,7 @@ function calculateAverageAqi(groupedData) {
 
 		// Calculate the average, convert it to a string with 2 decimal places,
 		// and then convert it back to a float
-		averageAqiData[date] = parseFloat((totalAqi / count).toFixed(2));
+		averageAqiData[`${date}`] = parseFloat((totalAqi / count).toFixed(2));
 	}
 	return averageAqiData;
 }
@@ -184,21 +199,21 @@ function calculatePercentageInRange(value, min, max) {
 }
 
 function getRanges(concentration, ranges) {
-	const rangeData = Object.entries(ranges)
-		.map(([key, value]) => {
-			const [Ilow, Ihigh] = key.split(' - ').map(Number);
-			const [Clow, Chigh] = value;
-			return { Ilow, Ihigh, Clow, Chigh };
-		})
-		.sort((a, b) => a.Clow - b.Clow);
+	const rangeData = Object.entries(ranges).find(([key, value]) => {
+		const [Ilow, Ihigh] = key.split(' - ').map(Number);
+		const [Clow, Chigh] = value;
+		return concentration > Clow && concentration < Chigh;
+	});
 
-	for (let i = 0; i < rangeData.length; i++) {
-		const { Ilow, Ihigh, Clow, Chigh } = rangeData[i];
-
-		if (Clow <= concentration && concentration <= Chigh) {
-			return { Ilow, Ihigh, Clow, Chigh };
-		}
+	if (rangeData) {
+		const [key, value] = rangeData;
+		const [Ilow, Ihigh] = key.split(' - ').map(Number);
+		const [Clow, Chigh] = value;
+		return { Ilow, Ihigh, Clow, Chigh };
 	}
+
+	// Return something (like null or undefined) if no matching range was found.
+	return null;
 }
 
 function calculateAqi(pollutant, concentration) {
@@ -251,42 +266,119 @@ function calculateAqiOfHour(groupedByHour) {
 			calculateAverage(extractValues(groupedByHour, pollutant)),
 			pollutantData.ranges
 		);
-		let { Ilow, Ihigh, Clow, Chigh } = range;
-		const aqi = aqiFormula(
-			calculateAverage(extractValues(groupedByHour, pollutant)),
-			Ilow,
-			Ihigh,
-			Clow,
-			Chigh
-		);
-		aqis.push(
-			parseFloat(calculatePercentageInRange(aqi, Ilow, Ihigh)).toFixed(2)
-		);
+		if (range) {
+			let { Ilow, Ihigh, Clow, Chigh } = range;
+			const aqi = aqiFormula(
+				calculateAverage(extractValues(groupedByHour, pollutant)),
+				Ilow,
+				Ihigh,
+				Clow,
+				Chigh
+			);
+			aqis.push(
+				parseFloat(calculatePercentageInRange(aqi, Ilow, Ihigh)).toFixed(2)
+			);
+		}
 	}
 	return aqis;
 }
 
-exports.dataConsolidation = (req, res) => {
-	const now = new Date();
+let mostRecentDate = new Date();
+mostRecentDate.setDate(
+	mostRecentDate.getDate() - (Math.floor(Math.random() * (31 - 8 + 1)) + 8)
+); // Start from 30 days ago
+
+function generateRandomDate() {
+	const newDate = new Date(mostRecentDate.getTime());
+	newDate.setMinutes(newDate.getMinutes() + Math.floor(Math.random() * 1440)); // Add up to one day
+	mostRecentDate = newDate; // Update the most recent date
+	return newDate;
+}
+
+function formatDateToTimestamp(date) {
+	const year = date.getFullYear();
+	let month = date.getMonth() + 1; // Months are zero indexed
+	let day = date.getDate();
+	let hours = date.getHours();
+	let minutes = date.getMinutes();
+
+	// Pad month, day, hours, and minutes with zero if required
+	month = month < 10 ? '0' + month : month;
+	day = day < 10 ? '0' + day : day;
+	hours = hours < 10 ? '0' + hours : hours;
+	minutes = minutes < 10 ? '0' + minutes : minutes;
+
+	const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+	const timestamp = Date.parse(formattedDate);
+
+	return timestamp / 1000;
+}
+
+function generateRandomData() {
+	return {
+		temperature: getRandomFloat(0, 45),
+		pressure: getRandomFloat(0, 90),
+		humidity: getRandomFloat(0, 90),
+		light: getRandomFloat(0, 90),
+		reduced: getRandomFloat(0, 2049),
+		oxidised: getRandomFloat(0, 50.4),
+		ammoniac: getRandomFloat(0, 10),
+		particules0: getRandomFloat(0, 95),
+		particules1: getRandomFloat(0.0, 500.4),
+		particules2: getRandomFloat(0.0, 600.0)
+	};
+}
+
+function buildDummyDatas() {
+	const dummyData = [];
+	for (let i = 0; i < Math.floor(Math.random() * (31 - 8 + 1)) + 8; i++) {
+		const date = generateRandomDate();
+		const timestamp = formatDateToTimestamp(date);
+		const randomData = generateRandomData();
+
+		const obj = {
+			...randomData,
+			date: timestamp
+		};
+
+		dummyData.push(obj);
+	}
+	return dummyData;
+}
+
+exports.dataConsolidation = async (req, res) => {
 	let hourlyAqi = [];
-	this.getStreamData(req.body.address).then((stream) => {
-		if (stream) {
-			stream = stream.map(cloneEntry).map(convertDate);
-			let groupedByDate = stream.reduce(groupByDate, {});
-			let groupedByHour = stream.reduce(groupByHour, {});
-			for (let hour in groupedByHour) {
-				hourlyAqi.push({
-					date: hour,
-					aqi: parseFloat(calculateAqiOfHour(groupedByHour[hour])).toFixed(2)
-				});
-			}
-			console.log(hourlyAqi, calculateAverageAqi(groupDataByDate(hourlyAqi)));
-			res.json([
-				calculateAverageAqi(groupDataByDate(hourlyAqi)),
-				stream[stream.length - 1]
-			]);
+	let stream = await this.getStreamData(req.body.address);
+	if (!stream) {
+		stream = buildDummyDatas();
+	}
+	stream = stream.map(cloneEntry).map(convertDate);
+	let groupedByDate = stream.reduce(groupByDate, {});
+	let groupedByHour = stream.reduce(groupByHour, {});
+
+	for (let hour in groupedByHour) {
+		hourlyAqi.push({
+			date: hour,
+			aqi: parseFloat(calculateAqiOfHour(groupedByHour[hour])).toFixed(2)
+		});
+	}
+	console.log(
+		'calculateAverageAqi(groupDataByDate(hourlyAqi))',
+		calculateAverageAqi(groupDataByDate(hourlyAqi), hourlyAqi)
+	);
+	const aqis = calculateAverageAqi(groupDataByDate(hourlyAqi));
+	let msg = '';
+	for (let aqi in aqis) {
+		let value = aqis[aqi]; // this is the value for the key aqi
+		if (value < 33) {
+			msg = [messages['low'][Math.floor(Math.random() * 3)], 'Basse'];
+		} else if (value >= 33 && value < 66) {
+			msg = [messages['medium'][Math.floor(Math.random() * 3)], 'Moyenne'];
+		} else if (value >= 66) {
+			msg = [messages['good'][Math.floor(Math.random() * 3)], 'Élevée'];
 		}
-	});
+	}
+	res.json([aqis, stream[stream.length - 1], msg]);
 };
 
 function aqiFormula(concentration, Ilow, Ihigh, Clow, Chigh) {
@@ -295,12 +387,14 @@ function aqiFormula(concentration, Ilow, Ihigh, Clow, Chigh) {
 
 exports.getStreamData = async (url) => {
 	try {
-		const response = await axios.get(`http://${url}/datas`);
-		if (response) {
-			return response.data;
-		}
+		// const response = await axios.get(`http://${url}/datas`);
+		// if (response) {
+		// 	return response.data;
+		// }
+		return false;
 	} catch (error) {
-		console.error(error);
+		console.error('ERROR ////', error);
+		return false;
 	}
 };
 
@@ -314,7 +408,6 @@ exports.startStream = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -331,7 +424,6 @@ exports.stopStream = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -348,7 +440,6 @@ exports.getLastHour = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -364,7 +455,6 @@ exports.getLastDay = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -380,7 +470,6 @@ exports.getLastWeek = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -396,7 +485,6 @@ exports.getLastMonth = (res) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -413,7 +501,6 @@ exports.getLastXMin = (res, min) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -430,7 +517,6 @@ exports.getLastXHour = (res, hour) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -447,7 +533,6 @@ exports.getLastXDay = (res, day) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -464,7 +549,6 @@ exports.getLastXWeek = (res, week) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}
@@ -481,7 +565,6 @@ exports.getLastXMonth = (res, month) => {
 			if (err) {
 				console.error(err);
 			} else {
-				console.log(json);
 				return res.status(200).json(json);
 			}
 		}

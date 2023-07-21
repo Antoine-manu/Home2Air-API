@@ -34,8 +34,6 @@ function referenceBuilder() {
 
 exports.create = function (req, res) {
   // Validate request
-  console.log('req --- ', req);
-
   if (!req.body.name) {
     res.status(400).send({
       message: 'Le capteur doit avoir un nom'
@@ -57,8 +55,7 @@ exports.create = function (req, res) {
       advanced: false,
       temperature: 'Celsius'
     })
-  };
-  console.log('sensor: ', sensor); // Save Sensor in the database
+  }; // Save Sensor in the database
 
   Sensor.create(sensor).then(function (data) {
     res.send(data);

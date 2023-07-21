@@ -63,7 +63,6 @@ exports.findAll = (req, res) => {
 
 exports.findAllRoomsAndSensorFromPlaceById = async (req, res) => {
   try {
-    console.log(req.body);
     const createdBy = req.body.user_id;
     const condition = createdBy ? { createdBy: createdBy } : null;
     const limit = req.query.limit || 10; // default to 10 if not specified
@@ -100,7 +99,6 @@ exports.findBy = (req, res) => {
   const name = req.body.name;
 
   var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-  console.log(condition);
   if (condition) {
     Place.findAll({ where: condition })
       .then(data => {
@@ -164,7 +162,6 @@ exports.findAllPlacesFromUser = async (req, res) => {
 			offset
 		});
 		res.send(places);
-		console.log("PLACES :" , places)
 	} catch (error) {
 		console.error(error);
 		res.status(500).send({

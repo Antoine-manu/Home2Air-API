@@ -67,7 +67,6 @@ exports.findBy = (req, res) => {
 	const name = req.body.name;
 
 	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-	console.log(condition);
 	if (condition) {
 		NotificationsConfig.findAll({ where: condition })
 			.then(data => {

@@ -40,7 +40,6 @@ exports.invite = (req, res) => {
     const condition = { place_id: invite.place_id, userTo : invite.userTo };
     Invite.findAll({where: {[Op.and] : condition}})
         .then(data => {
-            console.log("_____________________", data, data != [])
             if(data.length > 0){
                 res.send(data);
             } else {
