@@ -285,16 +285,19 @@ function calculateAqiOfHour(groupedByHour) {
 
 let mostRecentDate = new Date();
 mostRecentDate.setDate(
-	mostRecentDate.getDate() - (Math.floor(Math.random() * (31 - 8 + 1)) + 8)
-); // Start from 30 days ago
+	mostRecentDate.getDate() - Math.floor(Math.random() * 5 + 1)
+); // Start from 5 days ago
 
 function generateRandomDate() {
 	const newDate = new Date(mostRecentDate.getTime());
 	newDate.setMinutes(newDate.getMinutes() + Math.floor(Math.random() * 1440)); // Add up to one day
 	mostRecentDate = newDate; // Update the most recent date
-	return newDate;
+	if (mostRecentDate > new Date()) {
+		mostRecentDate = new Date();
+		mostRecentDate.setMonth(mostRecentDate.getMonth() - 1);
+	}
+	return mostRecentDate;
 }
-
 function formatDateToTimestamp(date) {
 	const year = date.getFullYear();
 	let month = date.getMonth() + 1; // Months are zero indexed
