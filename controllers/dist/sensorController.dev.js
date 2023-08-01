@@ -123,7 +123,6 @@ exports.findOneById = function (req, res) {
 
 
 exports.update = function (req, res) {
-  console.log('req', req.body);
   Sensor.update(req.body, {
     where: {
       id: req.params.id

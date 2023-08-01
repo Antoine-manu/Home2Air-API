@@ -2,7 +2,11 @@
 
 var express = require('express');
 
-var cors = require('cors'); // require('express-group-routes');
+var cors = require('cors');
+
+require('dotenv').config({
+  path: 'config.env'
+}); // require('express-group-routes');
 
 
 var app = express(); // Body parsers
@@ -31,7 +35,7 @@ var corsOptionsDelegate = function corsOptionsDelegate(req, callback) {
 
 try {
   app.use('/api/v1/', require('./routes/routes')).use('/api/v1/', require('./routes/company')).use('/api/v1/', require('./routes/notifications')).use('/api/v1/', require('./routes/place')).use('/api/v1/', require('./routes/roles')).use('/api/v1/', require('./routes/room')).use('/api/v1/', require('./routes/routes')).use('/api/v1/', require('./routes/sensor')).use('/api/v1/', require('./routes/invite')).use('/api/v1/', require('./routes/tickets')).use('/api/v1/', require('./routes/user')).use('/api/v1/', require('./routes/auth')).use('/api/v1/', require('./routes/probe'));
-  app.listen(6500, '192.168.1.152', cors(corsOptionsDelegate), function () {
+  app.listen(6500, '192.168.1.134', cors(corsOptionsDelegate), function () {
     return console.log('Server started: 6500');
   });
 } catch (error) {

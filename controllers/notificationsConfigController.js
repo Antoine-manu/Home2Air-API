@@ -17,33 +17,26 @@ exports.create = (req, res) => {
 		});
 		return;
 	}
-	if (!req.body.date) {
-		res.status(400).send({
-			message: 'La config doit avoir une écheance'
-		});
-		return;
-	}
 
 	// Create a Notification config
 	const config = {
 		title: req.body.title,
-        data: req.body.data,
-        percent: req.body.percent,
-        sound_id: req.body.sound_id,
-        icon_id: req.body.icon_id,
-        type: req.body.type_id,
-        message: req.body.message,
-        user_id: req.body.user_id
+		data: req.body.data,
+		percent: req.body.percent,
+		sound_id: req.body.sound_id,
+		icon_id: req.body.icon_id,
+		type: req.body.type_id,
+		message: req.body.message,
+		user_id: req.body.user_id
 	};
 	// Save Notification's config in the database
 	NotificationsConfig.create(config)
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while creating the Config.'
+				message: err.message || 'Some error occurred while creating the Config.'
 			});
 		});
 };
@@ -51,13 +44,29 @@ exports.create = (req, res) => {
 // Retrieve all Notifications configs from the database.
 exports.findAll = (req, res) => {
 	NotificationsConfig.findAll()
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
 					err.message || 'Some error occurred while retrieving Notifications.'
+			});
+		});
+};
+
+exports.findUserConfigs = (req, res) => {
+	const user_id = req.body.user_id;
+	const condition = { user_id: user_id };
+	NotificationsConfig.findAll({ where: { [Op.and]: condition } })
+		.then((data) => {
+			res.send(data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					'Some error occurred while retrieving the configurations.'
 			});
 		});
 };
@@ -66,16 +75,18 @@ exports.findAll = (req, res) => {
 exports.findBy = (req, res) => {
 	const name = req.body.name;
 
-	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+	const condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
 	if (condition) {
 		NotificationsConfig.findAll({ where: condition })
-			.then(data => {
+			.then((data) => {
 				res.send(data);
 			})
-			.catch(err => {
+			.catch((err) => {
 				res.status(500).send({
 					message:
-						err.message || 'Some error occurred while retrieving notifications config.'
+						err.message ||
+						'Some error occurred while retrieving notifications config.'
 				});
 			});
 	} else {
@@ -90,7 +101,7 @@ exports.findOneById = (req, res) => {
 	const id = req.body.id;
 
 	NotificationsConfig.findByPk(id)
-		.then(data => {
+		.then((data) => {
 			if (data) {
 				res.send(data);
 			} else {
@@ -99,10 +110,11 @@ exports.findOneById = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
-					err.message || 'Some error occurred while retrieving Notification config.' + id
+					err.message ||
+					'Some error occurred while retrieving Notification config.' + id
 			});
 		});
 };
@@ -114,7 +126,7 @@ exports.update = (req, res) => {
 	NotificationsConfig.update(req.body, {
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'notifications config was updated successfully.'
@@ -125,7 +137,7 @@ exports.update = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Error updating config with id=' + id
 			});
@@ -135,11 +147,11 @@ exports.update = (req, res) => {
 // Delete a notifications with the specified id in the request
 exports.delete = (req, res) => {
 	const id = req.body.id;
-
+	console.log(req.body.id);
 	NotificationsConfig.destroy({
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'config was deleted successfully!'
@@ -150,7 +162,7 @@ exports.delete = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Could not delete Notification config with id=' + id
 			});

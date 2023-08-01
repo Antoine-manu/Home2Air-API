@@ -1,5 +1,7 @@
 const express = require('express');
 var cors = require('cors');
+
+require('dotenv').config({path: 'config.env'})
 // require('express-group-routes');
 
 const app = express();
@@ -34,7 +36,7 @@ try {
 		.use('/api/v1/', require('./routes/auth'))
 		.use('/api/v1/', require('./routes/probe'));
 
-	app.listen(6500, '192.168.1.152', cors(corsOptionsDelegate), () =>
+	app.listen(6500, '192.168.1.134', cors(corsOptionsDelegate), () =>
 		console.log('Server started: 6500')
 	);
 } catch (error) {
