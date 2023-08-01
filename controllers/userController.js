@@ -1,11 +1,19 @@
 const db = require('../models/index.js');
-const User = db['User']
-const Invite = db['Invite']
+const User = db['User'];
+const Invite = db['Invite'];
 // const User = db.User
 const Op = db.Sequelize.Op;
 const { literal } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const CryptoJS = require('crypto-js');
+
+function decryptPassword(encryptedPassword) {
+	const bytes = CryptoJS.AES.decrypt(encryptedPassword, process.env.SECRET_KEY);
+	const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+
+	return originalPassword;
+}
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -33,9 +41,9 @@ exports.create = (req, res) => {
 			message: "L'utilisateur doit avoir un mot de passe"
 		});
 		return;
-	};
+	}
 	// Create a User
-	const hash = bcrypt.hashSync(req.body.password, 8)
+	const hash = bcrypt.hashSync(decryptPassword(req.body.password), 8);
 
 	const user = {
 		username: req.body.username,
@@ -49,17 +57,15 @@ exports.create = (req, res) => {
 		active: false
 	};
 
-	
 	console.log(user);
 	// Save User in the database
 	User.create(user)
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
-				message:
-					err.message || 'Some error occurred while creating the User.'
+				message: err.message || 'Some error occurred while creating the User.'
 			});
 		});
 };
@@ -67,16 +73,25 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
 	User.findAll({
-		include: ['Sensor', 'Tickets', 'Notifications', 'Place', 'Role', 'Company', 'Place_created','InvitesRecieved', 'InvitesSent'],
+		include: [
+			'Sensor',
+			'Tickets',
+			'Notifications',
+			'Place',
+			'Role',
+			'Company',
+			'Place_created',
+			'InvitesRecieved',
+			'InvitesSent'
+		]
 	})
-		.then(data => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
-				error:err,
-				message:
-					err.message || 'Some error occurred while retrieving Userss.'
+				error: err,
+				message: err.message || 'Some error occurred while retrieving Userss.'
 			});
 		});
 };
@@ -86,28 +101,31 @@ exports.findBy = (req, res) => {
 	const name = req.body.name;
 	const place_id = req.body.place_id;
 
-	var condition =  { first_name: { [Op.like]: `%${name}%` } , last_name: { [Op.like]: `%${name}%` }, email: { [Op.like]: `%${name}%` } }
-	console.log("CONDITION : ",name);
+	var condition = {
+		first_name: { [Op.like]: `%${name}%` },
+		last_name: { [Op.like]: `%${name}%` },
+		email: { [Op.like]: `%${name}%` }
+	};
+	console.log('CONDITION : ', name);
 	if (condition) {
 		User.findAll({
-			where: {[Op.or]: condition},
+			where: { [Op.or]: condition },
 			include: [
 				{
 					association: 'InvitesRecieved',
-					where : {
-						place_id : place_id
+					where: {
+						place_id: place_id
 					},
-					required : false
-				},
-			],
+					required: false
+				}
+			]
 		})
-			.then(data => {
+			.then((data) => {
 				res.send(data);
 			})
-			.catch(err => {
+			.catch((err) => {
 				res.status(500).send({
-					message:
-						err.message || 'Some error occurred while retrieving Users.'
+					message: err.message || 'Some error occurred while retrieving Users.'
 				});
 			});
 	} else {
@@ -120,10 +138,10 @@ exports.findBy = (req, res) => {
 // Find a single User with an id
 exports.findOneById = (req, res) => {
 	const id = req.body.id;
-	console.log(id)
+	console.log(id);
 
 	User.findByPk(id)
-		.then(data => {
+		.then((data) => {
 			if (data) {
 				res.send(data);
 			} else {
@@ -132,7 +150,7 @@ exports.findOneById = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
 					err.message || 'Some error occurred while retrieving Userss.' + id
@@ -144,7 +162,7 @@ function getMostRecentObject(objects) {
 	let mostRecentObject = null;
 	let mostRecentUpdatedAt = null;
 
-	objects.forEach(obj => {
+	objects.forEach((obj) => {
 		const updatedAt = new Date(obj.updatedAt);
 		if (!mostRecentObject || updatedAt > mostRecentUpdatedAt) {
 			mostRecentObject = obj;
@@ -162,7 +180,7 @@ exports.update = (req, res) => {
 	User.update(req.body, {
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'User was updated successfully.'
@@ -173,10 +191,10 @@ exports.update = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Error updating User with id=' + id,
-				error : err
+				error: err
 			});
 		});
 };
@@ -188,7 +206,7 @@ exports.delete = (req, res) => {
 	User.destroy({
 		where: { id: id }
 	})
-		.then(num => {
+		.then((num) => {
 			if (num == 1) {
 				res.send({
 					message: 'User was deleted successfully!'
@@ -199,7 +217,7 @@ exports.delete = (req, res) => {
 				});
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Could not delete User with id=' + id
 			});

@@ -134,7 +134,6 @@ exports.findOneById = (req, res) => {
 
 // Update a Sensor by the id in the request
 exports.update = (req, res) => {
-	console.log('req', req.body);
 	Sensor.update(req.body, {
 		where: { id: req.params.id }
 	})
@@ -160,7 +159,6 @@ exports.update = (req, res) => {
 // Delete a Sensor with the specified id in the request
 exports.delete = (req, res) => {
 	const id = req.body.id;
-
 	Sensor.destroy({
 		where: { id: id }
 	})

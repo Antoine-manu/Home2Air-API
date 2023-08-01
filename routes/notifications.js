@@ -40,6 +40,8 @@ router.post('/notifications-config/find-all', auth, notificationsConfigControlle
 /* POST findOne notifications config. */
 router.post('/notifications-config/find-by', auth, notificationsConfigController.findBy);
 
+router.post('/notifications-config/find-user-config', auth, notificationsConfigController.findUserConfigs);
+
 /* POST findOneById notifications config. */
 router.post('/notifications-config/find-one-by-id', auth, notificationsConfigController.findOneById);
 
