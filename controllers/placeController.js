@@ -173,7 +173,6 @@ exports.findAllPlacesFromUser = async (req, res) => {
 // Update a Place by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-
   Place.update(req.body, {
     where: { id: id }
   })

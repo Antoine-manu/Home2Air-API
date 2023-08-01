@@ -99,7 +99,22 @@ exports.findBy = (req, res) => {
 exports.findOneById = (req, res) => {
 	const id = req.body.id;
 
-	Sensor.findByPk(id)
+	Sensor.findByPk(id,{
+		include: [
+			{
+				association: "Room",
+				where : { deletedAt : {[Op.is]: null}},
+				required: false,
+				include: [
+					{
+						association: "Place",
+						where : { deletedAt : {[Op.is]: null}},
+						required: false,
+					},
+				],
+			},
+		],
+	})
 		.then((data) => {
 			if (data) {
 				res.send(data);

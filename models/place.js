@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   Place.init({
     name: DataTypes.STRING,
     createdBy: DataTypes.INTEGER,
+    config : DataTypes.INTEGER,
     deletedAt: DataTypes.DATE,
   }, {
     sequelize,

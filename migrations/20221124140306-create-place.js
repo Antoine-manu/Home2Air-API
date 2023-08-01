@@ -33,6 +33,10 @@ module.exports = {
           model: "Users",
           key: 'id'
         }
+      },
+      config: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
       }
     });
   },
