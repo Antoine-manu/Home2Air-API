@@ -285,14 +285,18 @@ function calculateAqiOfHour(groupedByHour) {
 
 let mostRecentDate = new Date();
 mostRecentDate.setDate(
-	mostRecentDate.getDate() - (Math.floor(Math.random() * (31 - 8 + 1)) + 8)
-); // Start from 30 days ago
+	mostRecentDate.getDate() - Math.floor(Math.random() * 5 + 1)
+); // Start from 5 days ago
 
 function generateRandomDate() {
 	const newDate = new Date(mostRecentDate.getTime());
 	newDate.setMinutes(newDate.getMinutes() + Math.floor(Math.random() * 1440)); // Add up to one day
 	mostRecentDate = newDate; // Update the most recent date
-	return newDate;
+	if (mostRecentDate > new Date()) {
+		mostRecentDate = new Date();
+		mostRecentDate.setMonth(mostRecentDate.getMonth() - 1);
+	}
+	return mostRecentDate;
 }
 
 function formatDateToTimestamp(date) {
@@ -315,17 +319,18 @@ function formatDateToTimestamp(date) {
 }
 
 function generateRandomData() {
+	let aqiRange = getRandomFloat(1,3);
 	return {
-		temperature: getRandomFloat(0, 45),
-		pressure: getRandomFloat(0, 90),
-		humidity: getRandomFloat(0, 90),
-		light: getRandomFloat(0, 90),
-		reduced: getRandomFloat(0, 2049),
-		oxidised: getRandomFloat(0, 50.4),
-		ammoniac: getRandomFloat(0, 10),
-		particules0: getRandomFloat(0, 95),
-		particules1: getRandomFloat(0.0, 500.4),
-		particules2: getRandomFloat(0.0, 600.0)
+		temperature: getRandomFloat(((aqiRange - 1)/3*45), (aqiRange/3)*45),
+		pressure: getRandomFloat(((aqiRange - 1)/3*90), (aqiRange/3)*90),
+		humidity: getRandomFloat(((aqiRange - 1)/3*90), (aqiRange/3)*90),
+		light: getRandomFloat(((aqiRange - 1)/3*90), (aqiRange/3)*90),
+		reduced: getRandomFloat(((aqiRange - 1)/3*2049), (aqiRange/3)*2049),
+		oxidised: getRandomFloat(((aqiRange - 1)/3*50.4), (aqiRange/3)*50.4),
+		ammoniac: getRandomFloat(((aqiRange - 1)/3*10), (aqiRange/3)*10),
+		particules0: getRandomFloat(((aqiRange - 1)/3*95), (aqiRange/3)*95),
+		particules1: getRandomFloat(((aqiRange - 1)/3*500.4), (aqiRange/3)*500.4),
+		particules2: getRandomFloat(((aqiRange - 1)/3*600), (aqiRange/3)*600)
 	};
 }
 
@@ -371,11 +376,11 @@ exports.dataConsolidation = async (req, res) => {
 	for (let aqi in aqis) {
 		let value = aqis[aqi]; // this is the value for the key aqi
 		if (value < 33) {
-			msg = [messages['low'][Math.floor(Math.random() * 3)], 'Basse'];
+			msg = [messages['low'][Math.floor(Math.random() * 3)], 'Basse', value];
 		} else if (value >= 33 && value < 66) {
-			msg = [messages['medium'][Math.floor(Math.random() * 3)], 'Moyenne'];
+			msg = [messages['medium'][Math.floor(Math.random() * 3)], 'Moyenne', value];
 		} else if (value >= 66) {
-			msg = [messages['good'][Math.floor(Math.random() * 3)], 'Élevée'];
+			msg = [messages['good'][Math.floor(Math.random() * 3)], 'Élevée', value];
 		}
 	}
 	res.json([aqis, stream[stream.length - 1], msg]);
