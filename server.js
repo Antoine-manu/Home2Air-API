@@ -35,7 +35,7 @@ try {
 		.use('/api/v1/', require('./routes/auth'))
 		.use('/api/v1/', require('./routes/probe'));
 
-	app.listen(6500, '192.168.1.173', cors(corsOptionsDelegate), () =>
+	app.listen(3000, cors(corsOptionsDelegate), () =>
 		console.log('Server started: 6500')
 	);
 } catch (error) {
