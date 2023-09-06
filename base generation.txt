@@ -6,7 +6,7 @@ npx sequelize model:generate --name Sensor --attributes name:string,created_at:d
 npx sequelize model:generate --name Notifications --attributes user_id:integer,custom:boolean,read:boolean,type:integer,date:date,title:string,sound_id:integer,icon_id:integer,message:text
 npx sequelize model:generate --name Notifications_types --attributes name:string 
 npx sequelize model:generate --name Notifications_messages --attributes message:string 
-npx sequelize model:generate --name User_place_list --attributes user_id:integer,place_id:integer
+npx sequelize model:generate --name User_place_lists --attributes user_id:integer,place_id:integer
 npx sequelize model:generate --name Place --attributes name:string
 // npx sequelize model:generate --name Room --attributes name:string,room_list_id:integer,place_id:integer
 npx sequelize model:generate --name Invites --attributes userTo:integer,userFrom:integer,isAccpected:boolean
@@ -14,7 +14,7 @@ npx sequelize model:generate --name Invites --attributes userTo:integer,userFrom
 npx sequelize model:generate --name Notifications_sound --attributes name:string
 npx sequelize model:generate --name Notifications_icon --attributes name:string  
 npx sequelize model:generate --name Notifications_config --attributes title:string,data:string,percent:integer,sound_id:integer,icon_id:integer,type:integer,message:text,user_id:integer
-npx sequelize model:generate --name User --attributes username:string,first_name:string,last_name:string,email:string,role_id:integer,token:string,created_at:date,deleted_at:date,active:boolean,user_place_list_id:integer
+npx sequelize model:generate --name User --attributes username:string,first_name:string,last_name:string,email:string,role_id:integer,token:string,created_at:date,deleted_at:date,active:boolean,user_place_lists_id:integer
 npx sequelize-cli model:generate --name User_Device --attributes user_id:integer,device:string
 
 

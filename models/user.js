@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 const roles = require('./roles');
-const User_place_list = require('./user_place_list');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
