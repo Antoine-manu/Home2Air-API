@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Place, Roles, Company, Notifications, Tickets, Sensor, Tickets_commentaire, Invites, Notifications_config}) {
       this.belongsToMany(Place, {
-        through: "user_place_list",
+        through: "User_place_lists",
         foreignKey: "user_id",
         otherKey: "place_id",
         as: "Place"
