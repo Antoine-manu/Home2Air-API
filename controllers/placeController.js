@@ -140,6 +140,13 @@ exports.findOneById = (req, res) => {
 
 //Give place from user
 exports.findAllPlacesFromUser = async (req, res) => {
+    if (!req.body.user_id) {
+        res.status(400).send({
+            message: "Envoyez un id utilisateur pour cette requete"
+        });
+        return;
+    }
+    console.log('______________________________')
 	try {
 		const user_id = req.body.user_id;
 		const condition = { deletedAt : null };
