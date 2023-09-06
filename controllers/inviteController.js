@@ -50,7 +50,7 @@ exports.invite = (req, res) => {
                             from: userFrom.email,
                             to: userTo.email,
                             subject: 'Invitation à l\'espace ' + place.name,
-                            html: '<p>Vous avez été invité par ' + userFrom.first_name + ' ' + userFrom.last_name + ' à rejoindre l\'espace ' + place.name + '. <a href="http://192.168.1.42:6500/api/v1/place/accept/' + data.id + '/' + token + '">Clickez ici pour le rejoindre</a>.</p>',
+                            html: '<p>Vous avez été invité par ' + userFrom.first_name + ' ' + userFrom.last_name + ' à rejoindre l\'espace ' + place.name + '. <a href="http://localhost:3001/invite/accept?id=' + data.id + '&token=' + token + '" target="_blank">Clickez ici pour le rejoindre</a>.</p>',
                         };
                         sendMail(mailOptions)
 
