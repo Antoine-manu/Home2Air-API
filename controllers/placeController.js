@@ -3,7 +3,7 @@ const db = require("../models");
 const Place = db.Place;
 const Room = db.Room;
 const Sensor = db.Sensor;
-const UserPlaceList = db.User_place_lists;
+const UserPlaceList = db.user_place_list;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Place
