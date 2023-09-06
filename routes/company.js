@@ -15,8 +15,11 @@ router.post('/company/find-by', auth, companyController.findBy);
 /* POST findOneById company. */
 router.post('/company/find-one-by-id', auth, companyController.findOneById);
 
+/* POST findOneByUserId company. */
+router.post('/company/find-one-by-user-id', auth, companyController.findOneByUserId);
+
 /* POST update company. */
-router.post('/company/update', auth, companyController.update);
+router.post('/company/update/:id', auth, companyController.update);
 
 /* POST delete company. */
 router.post('/company/delete', auth, companyController.delete);

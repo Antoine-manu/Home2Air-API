@@ -82,8 +82,8 @@ exports.findBy = (req, res) => {
 // Find a single Company with an id
 exports.findOneById = (req, res) => {
 	const id = req.body.id;
-
-	Company.findByPk(id)
+	var condition = id ? { user_id: { [Op.eq]: id } } : null;
+	Company.findAll({ where: condition })
 		.then(data => {
 			if (data) {
 				res.send(data);
@@ -101,10 +101,32 @@ exports.findOneById = (req, res) => {
 		});
 };
 
+// Find a single Company with an user id
+exports.findOneByUserId = (req, res) => {
+	const id = req.body.id;
+
+	Company.findByPk(id)
+		.then(data => {
+			if (data) {
+				res.send(data);
+			} else {
+				res.status(404).send({
+					message: `Cannot find Company with user=${id}.`
+				});
+			}
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Companies from the user. ' + id
+			});
+		});
+};
+
 // Update a Company by the id in the request
 exports.update = (req, res) => {
 	const id = req.params.id;
-
+	console.log(req.params, req.body)
 	Company.update(req.body, {
 		where: { id: id }
 	})
