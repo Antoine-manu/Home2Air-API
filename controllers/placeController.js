@@ -146,7 +146,6 @@ exports.findAllPlacesFromUser = async (req, res) => {
         });
         return;
     }
-    console.log('______________________________')
 	try {
 		const user_id = req.body.user_id;
 		const condition = { deletedAt : null };
@@ -170,7 +169,9 @@ exports.findAllPlacesFromUser = async (req, res) => {
 		});
 		res.send(places);
 	} catch (error) {
+        console.log('______________________________')
 		console.error(error);
+        console.log('______________________________')
 		res.status(500).send({
 			message: 'An error occurred while retrieving places'
 		});
