@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     place_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'user_place_list',
+    modelName: 'User_place_list',
   });
   return User_place_list;
 };
