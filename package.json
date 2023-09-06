@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start" : "node server.js"
   },
   "author": "Antoine Gaudry",
   "license": "ISC",
