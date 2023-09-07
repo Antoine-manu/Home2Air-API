@@ -217,7 +217,7 @@ exports.findByUser = (req, res) => {
 exports.findById = (req, res) => {
     const id = req.body.id;
     const condition = { id: id };
-    Invite.findByPk(id, {include : ["From", "To", "Place"]})
+    Invite.findAll({where: condition, include : ["From", "To", "Place"]})
 		.then(data => {
 			res.send(data);
 		})
