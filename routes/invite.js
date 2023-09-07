@@ -18,7 +18,7 @@ router.post('/invite/delete', auth, inviteController.delete);
 router.post('/invite/find-by-user', auth, inviteController.findByUser);
 
 /* POST delete invite. */
-router.post('/invite/find-by-id', auth, inviteController.findById);
+router.get('/invite/find-by-id/:id', auth, inviteController.findById);
 
 /* POST findAll invites. */
 router.post('/invite/find-all', auth, inviteController.findAll);
