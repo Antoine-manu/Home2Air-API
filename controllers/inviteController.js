@@ -212,3 +212,19 @@ exports.findByUser = (req, res) => {
 			});
 		});
 };
+
+// Retrieve all Invites from the database.
+exports.findById = (req, res) => {
+    const id = req.body.id;
+    const condition = { id: id };
+    Invite.findByPk(id, {include : ["From", "To", "Place"]})
+		.then(data => {
+			res.send(data);
+		})
+		.catch(err => {
+			res.status(500).send({
+				message:
+					err.message || 'Some error occurred while retrieving Invites.'
+			});
+		});
+};
