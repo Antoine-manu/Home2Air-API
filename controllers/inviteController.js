@@ -92,7 +92,7 @@ exports.invite = (req, res) => {
 
 //Accept a invitation to a space
 exports.accept = (req, res) => {
-    id = req.params.id
+    id = req.body.id
     Invite.findByPk(id, {include : ["From", "To", "Place"]})
         .then(data => {
             invite = data

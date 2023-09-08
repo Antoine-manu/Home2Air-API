@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/place/invite', auth, inviteController.invite);
 
 /* POST accept invites. */
-router.get('/place/accept/:id/:token', auth, inviteController.accept);
+router.post('/invite/accept', auth, inviteController.accept);
 
 /* POST delete invite. */
 router.post('/invite/delete', auth, inviteController.delete);
